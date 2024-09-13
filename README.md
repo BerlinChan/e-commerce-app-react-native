@@ -1,35 +1,37 @@
-<img align='right' src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="230">
- 
-## Frontend E-commerce App 👨‍💻
+This fork is a refactoring of the original project to upgrade to the latest Expo version (currently v51). It's WIP, many features are unavailable now.
 
-[![](https://img.shields.io/badge/Facebook-AnhQuanNguyen-blue)](https://www.facebook.com/anhquan291/)
-[![](https://img.shields.io/badge/Gmail-anhquan291%40gmail.com-red)](mailto:anhquan291@gmail.com)
+## Changes Detail
+- Upgrade Expo to version 51
+- Redux -> React useContext and useReducer hooks
+- React Navigation -> Expo Router
+- JavaScript -> TypeScript
+- React class components -> function component
+- Use mocked data and API
+- Translate verbiage to English
+
+## Frontend E-commerce App 👨‍💻
 
 ### <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50">Contain all necessary features 
 
 ## :star: Get Started
+1. Install dependencies
 
-```bash
-# install expo cli
-npm install -g expo-cli
-```
-``` bash
-# install dependencies
-npm install
-```
-Or use `yarn`
-``` bash
-yarn install
-```
-``` bash
+   ```bash
+   npm install
+   ```
 
-# run project
-expo start
-```
-``` bash
-Change the API in config.js to the server that you're running. 
-If you use my backend project the IP should be the IPv4 Address on your computer (cmd -> ipconfig)
-```
+2. Start the app
+
+   ```bash
+    npx expo start
+   ```
+
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 ## :star: Features
 - Authentication (Signup, Login, Reset Password).
@@ -52,11 +54,11 @@ If you use my backend project the IP should be the IPv4 Address on your computer
 - UI framework: Reac Native Paper
 - Intro slides: Animated, onScroll Event for animation.
 - Header Animation: Animated, React Animatable.
-- Form: Redux form validation.
+- Form: [react-hook-form](https://react-hook-form.com/) form validation.
 - Icon: Lottie, React native vector icon.
 - Payment: React native credit card, Stripe server for card validation checking.
 - Loader: Skeleton loader, Linear gradient.
-- Reducer: Redux. 
+- State Management: React [useContext](https://react.dev/reference/react/useContext) and [useReducer](https://react.dev/reference/react/useReducer) hooks. 
 - Image Picker: Expo image picker.
 - Deep Link: Expo Linking.
 - Touch/Face ID: react native touch id, react native keychain, expo authentication 
@@ -79,7 +81,3 @@ you'd like. Pull requests are warmly welcome. Thanks alot
  <img src="https://i.imgur.com/vnbPrl4.png" width="250">
  <img src="https://i.imgur.com/mT5Vjmj.png" width="250">
 </div>
-
-
-
-
