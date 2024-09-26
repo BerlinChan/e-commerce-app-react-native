@@ -6,15 +6,14 @@ import { Header, OrderBody } from "@/components/order";
 import SkeletonLoadingCart from "@/components/Loaders/SkeletonLoadingCart";
 import { useAuth } from "@/context/AuthContext";
 import { useProfile } from "@/context/ProfileContext";
-import { useOrder, useOrderDispatch } from "@/context/OrderContext";
+import { useOrder } from "@/context/OrderContext";
 
 const { height } = Dimensions.get("window");
 
 export default function OrderScreen() {
-  const auth = useAuth();
-  const profile = useProfile();
-  const order = useOrder();
-  const orderDispatch = useOrderDispatch()!;
+  const { auth } = useAuth();
+  const { profile } = useProfile();
+  const { order, orderDispatch } = useOrder();
 
   async function loadOrders() {
     if (!profile.id) return;

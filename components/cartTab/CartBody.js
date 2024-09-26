@@ -5,10 +5,6 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-//Redux
-// import { useDispatch } from "react-redux";
-//Action
-// import { removeFromCart, addToCart, decCartQuantity } from "../../../reducers";
 //Text
 import CustomText from "@/components/UI/CustomText";
 //Colors
@@ -18,11 +14,10 @@ import Messages from "@/messages/user";
 //PropTypes check
 import PropTypes from "prop-types";
 import { router } from "expo-router";
-import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
-export const CartBody = ({ user, carts, loadCarts, isRefreshing }) => {
-  const auth = useAuth();
-  // const dispatch = useDispatch();
+export const CartBody = ({ profile, cart, loadCarts, isRefreshing }) => {
+  const { cartDispatch } = useCart();
 
   const onRemove = (itemId) => {
     Alert.alert(
@@ -35,7 +30,7 @@ export const CartBody = ({ user, carts, loadCarts, isRefreshing }) => {
         {
           text: "Agree",
           onPress: () => {
-            // dispatch(removeFromCart(carts._id, itemId));
+            cartDispatch({ type: "REMOVE_FROM_CART", itemId });
           },
         },
       ]
@@ -44,7 +39,7 @@ export const CartBody = ({ user, carts, loadCarts, isRefreshing }) => {
 
   return (
     <View style={styles.footer}>
-      {!user.id === 0 ? (
+      {!profile.id ? (
         <View style={styles.center}>
           <CustomText>{Messages["user.login.require"]}</CustomText>
           <View style={styles.nextButton}>
@@ -53,29 +48,32 @@ export const CartBody = ({ user, carts, loadCarts, isRefreshing }) => {
             </TouchableOpacity>
           </View>
         </View>
-      ) : carts.items.length === 0 ? (
+      ) : cart.items.length === 0 ? (
         <View style={styles.center}>
           <CustomText style={{ fontSize: 16 }}>
             There are no products in the cart.
           </CustomText>
         </View>
       ) : (
-        <View style={{ marginBottom: 80 }}>
+        <View style={{ flex: 1 }}>
           <FlatList
-            data={carts.items}
+            data={cart.items}
             onRefresh={loadCarts}
             refreshing={isRefreshing}
-            keyExtractor={(item) => item.item._id}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
                 <CartItem
                   item={item}
-                  onRemove={() => onRemove(item.item._id)}
+                  onRemove={() => onRemove(item.id)}
                   onAdd={() => {
-                    // dispatch(addToCart(item.item, auth.token));
+                    cartDispatch({ type: "ADD_TO_CART", item });
                   }}
                   onDes={() => {
-                    // dispatch(decCartQuantity(carts._id, item.item._id));
+                    cartDispatch({
+                      type: "DEC_CART_QUANTITY",
+                      itemId: item.id,
+                    });
                   }}
                 />
               );
@@ -88,11 +86,12 @@ export const CartBody = ({ user, carts, loadCarts, isRefreshing }) => {
 };
 
 CartBody.propTypes = {
-  user: PropTypes.object.isRequired,
-  carts: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
   loadCarts: PropTypes.func.isRequired,
   isRefreshing: PropTypes.bool.isRequired,
 };
+
 const styles = StyleSheet.create({
   footer: {
     flex: 1,

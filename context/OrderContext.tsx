@@ -12,10 +12,10 @@ const initialState = {
   isLoading: false,
 };
 
-const OrderContext = createContext<StateType>(initialState);
-const OrderDispatchContext = createContext<React.Dispatch<ActionType>>(
-  () => {}
-);
+const Context = createContext<{
+  order: StateType;
+  orderDispatch: React.Dispatch<ActionType>;
+}>({ order: initialState, orderDispatch: () => {} });
 
 function reducer(
   state: StateType = initialState,
@@ -53,21 +53,15 @@ function reducer(
 export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [auth, dispatch] = useReducer(reducer, initialState);
+  const [order, orderDispatch] = useReducer(reducer, initialState);
 
   return (
-    <OrderContext.Provider value={auth}>
-      <OrderDispatchContext.Provider value={dispatch}>
-        {children}
-      </OrderDispatchContext.Provider>
-    </OrderContext.Provider>
+    <Context.Provider value={{ order, orderDispatch }}>
+      {children}
+    </Context.Provider>
   );
 };
 
 export function useOrder() {
-  return useContext(OrderContext);
-}
-
-export function useOrderDispatch() {
-  return useContext(OrderDispatchContext);
+  return useContext(Context);
 }

@@ -1,4 +1,3 @@
-import { useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -14,8 +13,8 @@ import LottieView from "lottie-react-native";
 //Animatable
 import * as Animatable from "react-native-animatable";
 import Messages from "@/messages/user";
-import { useProfile, useProfileDispatch } from "@/context/ProfileContext";
-
+import { useProfile } from "@/context/ProfileContext";
+import { useCart } from "@/context/CartContext";
 //PropTypes check
 import PropTypes from "prop-types";
 
@@ -28,24 +27,16 @@ export const ActionButton = ({
   setMessage,
 }) => {
   const cartLoading = false;
-  const unmounted = useRef(false);
-  const profile = useProfile();
-  const profileDispatch = useProfileDispatch();
+  const { profile, profileDispatch } = useProfile();
+  const { cartDispatch } = useCart();
 
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
-
-  //Set Colors
   const addToCartAct = async () => {
     if (!profile.id) {
       setMessage(Messages["user.login.require"]);
       setShowSnackbar(true);
     } else {
       try {
-        profileDispatch({ type: "ADD_TO_CART", payload: item });
+        cartDispatch({ type: "ADD_TO_CART", item });
         setModalVisible(true);
       } catch (err) {
         throw err;

@@ -7,13 +7,12 @@ import {
 } from "@/components/Screens/ProfileScreen/components";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import Loader from "@/components/Loaders/Loader";
-import { useProfile, useProfileDispatch } from "@/context/ProfileContext";
+import { useProfile } from "@/context/ProfileContext";
 
 const { width, height } = Dimensions.get("window");
 
 export default function ProfileScreen() {
-  const profile = useProfile();
-  const profileDispatch = useProfileDispatch();
+  const { profile, profileDispatch } = useProfile();
   const [imageUri, setImageUri] = useState("");
   const [filename, setFilename] = useState("");
   const [type, setType] = useState("");

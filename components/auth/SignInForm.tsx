@@ -24,8 +24,8 @@ import { secretKey } from "@/utils/Config";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { API_URL } from "@/utils/Config";
 import { timeoutPromise } from "@/utils/Tools";
-import { useAuthDispatch } from "@/context/AuthContext";
-import { useProfileDispatch } from "@/context/ProfileContext";
+import { useAuth } from "@/context/AuthContext";
+import { useProfile } from "@/context/ProfileContext";
 import { router } from "expo-router";
 
 const { height } = Dimensions.get("window");
@@ -45,8 +45,8 @@ export const SignInForm: React.FC = () => {
     },
   });
   const [showPass, setShowPass] = useState(false);
-  const authDispatch = useAuthDispatch();
-  const profileDispatch = useProfileDispatch();
+  const { authDispatch } = useAuth();
+  const { profileDispatch } = useProfile();
 
   const scanFingerprintOrFaceId = async () => {
     const resData = await SecureStore.getItemAsync(secretKey);

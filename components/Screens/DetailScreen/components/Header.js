@@ -32,6 +32,11 @@ export const Header = ({ scrollY, item }) => {
     outputRange: [0, -HEADER_SCROLL_DISTANCE],
     extrapolate: "clamp",
   });
+  const headerIcon = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [Colors.lighter_green, "#fff"],
+    extrapolate: "clamp",
+  });
   const headerOpacity = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
     outputRange: [0, 0, 1],
@@ -50,9 +55,9 @@ export const Header = ({ scrollY, item }) => {
           onPress={() => router.back()}
           style={styles.goBackIcon}
         >
-          <View>
-            <Ionicons name="arrow-back-outline" size={25} color="#fff" />
-          </View>
+          <Animated.Text style={{ color: headerIcon }}>
+            <Ionicons name="arrow-back-outline" size={25} />
+          </Animated.Text>
         </TouchableOpacity>
         <Animated.View style={{ opacity: headerOpacity }}>
           <CustomText

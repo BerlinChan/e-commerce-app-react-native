@@ -18,18 +18,16 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { OpenURL } from "@/utils/Tools";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useProfile } from "@/context/ProfileContext";
+import { useAuth } from "@/context/AuthContext";
 import { router } from "expo-router";
-import { useAuthDispatch } from "@/context/AuthContext";
-import { useProfileDispatch } from "@/context/ProfileContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const fbURL = "https://www.facebook.com/daquyankhangthinhvuong/";
 const youtubeURL = "https://www.youtube.com/";
 
 export default (props) => {
-  const profile = useProfile();
-  const profileDispatch = useProfileDispatch();
-  const authDispatch = useAuthDispatch();
+  const { profile, profileDispatch } = useProfile();
+  const { authDispatch } = useAuth();
 
   const Logout = () => {
     Alert.alert("Log Out", "Are you sure you want to log out?", [

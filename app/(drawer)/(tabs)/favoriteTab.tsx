@@ -13,7 +13,7 @@ import { useProfile } from "@/context/ProfileContext";
 
 export default function FavoriteScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const profile = useProfile();
+  const { profile } = useProfile();
   // const dispatch = useDispatch();
 
   const loadFavoriteProducts = useCallback(async () => {

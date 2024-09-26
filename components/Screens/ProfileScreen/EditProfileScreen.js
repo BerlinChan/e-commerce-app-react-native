@@ -5,12 +5,11 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { TextInput, Button } from "react-native-paper";
 import Colors from "@/utils/Colors";
 import Loader from "@/components/Loaders/Loader";
-import { useProfile, useProfileDispatch } from "@/context/ProfileContext";
+import { useProfile } from "@/context/ProfileContext";
 import { router } from "expo-router";
 
 export default function EditProfileScreen() {
-  const profile = useProfile();
-  const profileDispatch = useProfileDispatch();
+  const { profile, profileDispatch } = useProfile();
   const [address, setAddress] = useState(profile.address.street);
   const [phone, setPhone] = useState(profile.phone);
   const [disableButton, setDisableBotton] = useState(true);

@@ -6,7 +6,7 @@ import CustomDrawerContent from "@/components/navigation/CustomDrawerContent";
 import { useProfile } from "@/context/ProfileContext";
 
 export default function AppDrawerNavigator() {
-  const profile = useProfile();
+  const { profile } = useProfile();
   const drawers = [
     {
       name: "(tabs)",

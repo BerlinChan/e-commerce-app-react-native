@@ -8,9 +8,9 @@ import { useFonts } from "expo-font";
 import { Host } from "react-native-portalize";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProfileProvider } from "@/context/ProfileContext";
+import { CartProvider } from "@/context/CartContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { Stack } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -64,17 +64,19 @@ export default function Layout() {
       <Host>
         <AuthProvider>
           <ProfileProvider>
-            <OrderProvider>
-              <StatusBar />
-              <LocalNotification />
-              <Stack
-                initialRouteName="intro"
-                screenOptions={{ headerShown: false }}
-              >
-                <Stack.Screen name="intro" />
-                <Stack.Screen name="(drawer)" />
-              </Stack>
-            </OrderProvider>
+            <CartProvider>
+              <OrderProvider>
+                <StatusBar />
+                <LocalNotification />
+                <Stack
+                  initialRouteName="intro"
+                  screenOptions={{ headerShown: false }}
+                >
+                  <Stack.Screen name="intro" />
+                  <Stack.Screen name="(drawer)" />
+                </Stack>
+              </OrderProvider>
+            </CartProvider>
           </ProfileProvider>
         </AuthProvider>
       </Host>

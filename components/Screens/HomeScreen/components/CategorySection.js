@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 export class CategorySection extends React.PureComponent {
   render() {
-    const { data, name, bg, navigation } = this.props;
+    const { data, name, bg, router } = this.props;
     const jewelery = data.filter((item) => item.category === "jewelery");
     const menCloth = data.filter((item) => item.category === "men's clothing");
     const electronics = data.filter((item) => item.category === "electronics");
@@ -39,12 +39,12 @@ export class CategorySection extends React.PureComponent {
             numColumns={2}
             columnWrapperStyle={styles.list}
             renderItem={({ item }) => {
-              return <ProductItem item={item} navigation={navigation} />;
+              return <ProductItem item={item} />;
             }}
           />
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("/(tabs)/(homeTab)/product")}
+          onPress={() => router.navigate("/(tabs)/(homeTab)/product")}
           style={{ marginHorizontal: 10 }}
         >
           <BlurView tint="light" intensity={100} style={styles.seeMore}>
@@ -58,7 +58,7 @@ export class CategorySection extends React.PureComponent {
 
 CategorySection.propTypes = {
   data: PropTypes.array.isRequired,
-  navigation: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

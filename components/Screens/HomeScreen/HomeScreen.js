@@ -18,11 +18,11 @@ import { timeoutPromise } from "@/utils/Tools";
 import { API_URL } from "@/utils/Config";
 import { useProfile } from "@/context/ProfileContext";
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ router }) => {
   // const dispatch = useDispatch();
   //Header Animation
   const scrollY = new Animated.Value(0);
-  const profile = useProfile();
+  const { profile } = useProfile();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const notification = {};
@@ -61,7 +61,6 @@ export const HomeScreen = ({ navigation }) => {
         <View style={styles.container}>
           <Header
             scrollPoint={scrollY}
-            navigation={navigation}
             products={products}
           />
           <Portal>
@@ -91,7 +90,7 @@ export const HomeScreen = ({ navigation }) => {
                 name={item.name}
                 bg={item.bg}
                 data={products}
-                navigation={navigation}
+                router={router}
               />
             )}
           />

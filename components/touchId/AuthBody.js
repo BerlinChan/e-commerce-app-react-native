@@ -12,7 +12,7 @@ import { useProfile } from "@/context/ProfileContext";
 export const AuthBody = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isSupport, setIsSupport] = useState(false);
-  const profile = useProfile();
+  const { profile } = useProfile();
   const switchHandler = async () => {
     setIsEnabled((previousState) => !previousState);
     if (!isEnabled) {

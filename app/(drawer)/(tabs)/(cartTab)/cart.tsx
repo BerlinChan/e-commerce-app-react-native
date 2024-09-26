@@ -9,23 +9,38 @@ import Colors from "@/utils/Colors";
 import { Header, CartBody, TotalButton } from "@/components/cartTab";
 //Loader
 import Loader from "@/components/Loaders/Loader";
-import { useProfile, useProfileDispatch } from "@/context/ProfileContext";
+import { useProfile } from "@/context/ProfileContext";
+import { useCart } from "@/context/CartContext";
+import { timeoutPromise } from "@/utils/Tools";
+import { API_URL } from "@/utils/Config";
 
 const { height } = Dimensions.get("window");
 
 export default function CartScreen() {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const profile = useProfile();
-  const carts = { _id: "", items: [] };
+  const { profile } = useProfile();
+  const { cart, cartDispatch } = useCart();
   const loading = false;
-  const cartItems = carts.items;
-  const cartId = carts._id;
   // const dispatch = useDispatch();
-  let total = 0;
-  carts.items.map((item) => (total += +item.item.price * +item.quantity));
+  const total = cart.items.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0
+  );
+
   const loadCarts = useCallback(async () => {
     setIsRefreshing(true);
     try {
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/carts/user/${profile.id}`, {
+          method: "GET",
+        })
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!, can't get the carts");
+      }
+      const resData = await response.json();
+      // cartDispatch({ type: "FETCH_CART", items: [] });
       // await dispatch(fetchCart());
     } catch (err) {
       alert(err);
@@ -38,24 +53,21 @@ export default function CartScreen() {
 
   return (
     <View style={styles.container}>
-      <Header user={profile} carts={carts} />
+      <Header profile={profile} cart={cart} />
       {loading ? <Loader /> : <></>}
       <CartBody
-        user={profile}
-        carts={carts}
+        profile={profile}
+        cart={cart}
         loadCarts={loadCarts}
         isRefreshing={isRefreshing}
       />
-      {!profile.id ? (
-        <></>
-      ) : carts.items.length === 0 ? (
-        <View />
-      ) : (
-        <TotalButton total={total} cartItems={cartItems} cartId={cartId} />
+      {profile.id && cart.items.length && (
+        <TotalButton total={total} cartItems={cart.items} cartId={cart.id} />
       )}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

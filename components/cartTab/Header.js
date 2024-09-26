@@ -13,11 +13,11 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/utils/Colors";
 //PropTypes check
 import PropTypes from "prop-types";
-
-const { height } = Dimensions.get("window");
 import { router } from "expo-router";
 
-export const Header = ({ user, carts }) => {
+const { height } = Dimensions.get("window");
+
+export const Header = ({ profile, cart }) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -29,11 +29,7 @@ export const Header = ({ user, carts }) => {
       </TouchableOpacity>
       <CustomText style={styles.titleHeader}>
         Shopping Cart
-        {!user.id
-          ? ""
-          : carts.items.length === 0
-          ? ""
-          : `(${carts.items.length})`}
+        {!profile.id || cart.items.length === 0 ? "" : `(${cart.items.length})`}
       </CustomText>
       <View style={{ width: 15 }} />
     </View>
@@ -41,8 +37,8 @@ export const Header = ({ user, carts }) => {
 };
 
 Header.propTypes = {
-  user: PropTypes.object.isRequired,
-  carts: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

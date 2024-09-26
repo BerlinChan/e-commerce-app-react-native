@@ -1,9 +1,9 @@
 import Colors from "@/utils/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-
+import { useCart } from "@/context/CartContext";
 export default function Index() {
-  const carts = { items: [] };
+  const { cart } = useCart();
 
   return (
     <Tabs
@@ -16,7 +16,7 @@ export default function Index() {
             iconName = "home";
           } else if (route.name === "favoriteTab") {
             iconName = "hearto";
-          } else if (route.name === "cartTab") {
+          } else if (route.name === "(cartTab)") {
             iconName = "shoppingcart";
           }
           return <AntDesign name={iconName} size={23} color={color} />;
@@ -43,11 +43,10 @@ export default function Index() {
         })}
       />
       <Tabs.Screen
-        name="cartTab"
+        name="(cartTab)"
         options={{
           tabBarLabel: "Cart",
-          tabBarBadge:
-            carts.items.length === 0 ? undefined : carts.items.length,
+          tabBarBadge: cart.items.length === 0 ? undefined : cart.items.length,
         }}
       />
     </Tabs>

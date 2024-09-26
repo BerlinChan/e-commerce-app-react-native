@@ -14,7 +14,7 @@ import {
 import { colorCheck, timeoutPromise } from "@/utils/Tools";
 import { API_URL } from "@/utils/Config";
 import { useProfile } from "@/context/ProfileContext";
-import { useNavigation } from "expo-router";
+import { router } from "expo-router";
 
 export const DetailScreen = ({ id }) => {
   const scrollY = new Animated.Value(0);
@@ -24,16 +24,13 @@ export const DetailScreen = ({ id }) => {
   const [message, setMessage] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [color, setColor] = useState(Colors.lighter_green);
-  //color
-  const type = "green";
   const [modalVisible, setModalVisible] = useState(false);
   //Favorite
-  const profile = useProfile();
+  const { profile } = useProfile();
   const isFavorite = profile.favorites.some((fav) => fav.id === product.id);
-  const navigation = useNavigation();
 
   useEffect(() => {
-    setColor(colorCheck(type));
+    setColor(colorCheck(product.category));
 
     async function fetchData() {
       try {
@@ -89,7 +86,7 @@ export const DetailScreen = ({ id }) => {
         color={color}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        navigation={navigation}
+        router={router}
       />
     </View>
   );

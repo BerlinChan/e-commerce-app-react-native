@@ -49,10 +49,10 @@ const initialState = {
   ],
 };
 
-const ProfileContext = createContext<StateType>(initialState);
-const ProfileDispatchContext = createContext<React.Dispatch<ActionType>>(
-  () => {}
-);
+const Context = createContext<{
+  profile: StateType;
+  profileDispatch: React.Dispatch<ActionType>;
+}>({ profile: initialState, profileDispatch: () => {} });
 
 function reducer(
   state: StateType = initialState,
@@ -94,24 +94,18 @@ function reducer(
 export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [auth, dispatch] = useReducer(reducer, {
+  const [profile, profileDispatch] = useReducer(reducer, {
     ...initialState,
     ...JSON.parse(SecureStore.getItem("profile") ?? "{}"),
   });
 
   return (
-    <ProfileContext.Provider value={auth}>
-      <ProfileDispatchContext.Provider value={dispatch}>
-        {children}
-      </ProfileDispatchContext.Provider>
-    </ProfileContext.Provider>
+    <Context.Provider value={{ profile, profileDispatch }}>
+      {children}
+    </Context.Provider>
   );
 };
 
 export function useProfile() {
-  return useContext(ProfileContext);
-}
-
-export function useProfileDispatch() {
-  return useContext(ProfileDispatchContext);
+  return useContext(Context);
 }

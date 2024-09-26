@@ -10,11 +10,11 @@ import { router } from "expo-router";
 import { useProfile } from "@/context/ProfileContext";
 
 export const FavoriteBody = ({ loadFavoriteProducts, isRefreshing }) => {
-  const profile = useProfile();
+  const { profile } = useProfile();
 
   return (
     <>
-      {!profile.id === 0 ? (
+      {!profile.id ? (
         <View style={styles.center}>
           <CustomText>{Messages["user.login.require"]}</CustomText>
           <View

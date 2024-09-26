@@ -12,8 +12,10 @@ const initialState = {
   loading: false,
 };
 
-const AuthContext = createContext<StateType>(initialState);
-const AuthDispatchContext = createContext<React.Dispatch<ActionType>>(() => {});
+const Context = createContext<{
+  auth: StateType;
+  authDispatch: React.Dispatch<ActionType>;
+}>({ auth: initialState, authDispatch: () => {} });
 
 function reducer(
   state: StateType = initialState,
@@ -48,24 +50,18 @@ function reducer(
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [auth, dispatch] = useReducer(reducer, {
+  const [auth, authDispatch] = useReducer(reducer, {
     ...initialState,
     token: SecureStore.getItem("token") ?? "",
   });
 
   return (
-    <AuthContext.Provider value={auth}>
-      <AuthDispatchContext.Provider value={dispatch}>
-        {children}
-      </AuthDispatchContext.Provider>
-    </AuthContext.Provider>
+    <Context.Provider value={{ auth, authDispatch }}>
+      {children}
+    </Context.Provider>
   );
 };
 
 export function useAuth() {
-  return useContext(AuthContext);
-}
-
-export function useAuthDispatch() {
-  return useContext(AuthDispatchContext);
+  return useContext(Context);
 }
