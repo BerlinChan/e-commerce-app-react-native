@@ -2,18 +2,17 @@ import {
   View,
   StyleSheet,
   ImageBackground,
-  Dimensions,
   TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
-//Components
 import { SignInForm } from "@/components/auth/SignInForm";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/utils/Colors";
 import { router } from "expo-router";
 
-const { height, width } = Dimensions.get("window");
-
 export default function SignIn() {
+  const { height, width } = useWindowDimensions();
+
   return (
     <View style={styles.container}>
       <ImageBackground

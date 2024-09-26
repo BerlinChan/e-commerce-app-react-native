@@ -10,6 +10,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { Stack } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -66,9 +67,12 @@ export default function Layout() {
             <OrderProvider>
               <StatusBar />
               <LocalNotification />
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="(drawer)" />
+              <Stack
+                initialRouteName="intro"
+                screenOptions={{ headerShown: false }}
+              >
                 <Stack.Screen name="intro" />
+                <Stack.Screen name="(drawer)" />
               </Stack>
             </OrderProvider>
           </ProfileProvider>

@@ -12,41 +12,47 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Drawer } from "react-native-paper";
 import Colors from "@/utils/Colors";
 import CustomText from "@/components/UI/CustomText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { OpenURL } from "@/utils/Tools";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useProfile } from "@/context/ProfileContext";
+import { router } from "expo-router";
+import { useAuthDispatch } from "@/context/AuthContext";
+import { useProfileDispatch } from "@/context/ProfileContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const fbURL = "https://www.facebook.com/daquyankhangthinhvuong/";
 const youtubeURL = "https://www.youtube.com/";
-const user = {};
 
-//custom drawer content
 export default (props) => {
+  const profile = useProfile();
+  const profileDispatch = useProfileDispatch();
+  const authDispatch = useAuthDispatch();
+
   const Logout = () => {
-    Alert.alert("Đăng Xuất", "Bạn có chắc muốn đăng xuất?", [
+    Alert.alert("Log Out", "Are you sure you want to log out?", [
       {
-        text: "Hủy",
+        text: "Cancel",
         style: "cancel",
       },
       {
-        text: "Đồng ý",
-        onPress: () => {
-          props.navigation.navigate("Home");
+        text: "Agree",
+        onPress: async () => {
+          await AsyncStorage.removeItem("skipIntro");
+          authDispatch({ type: "SIGN_OUT" });
+          profileDispatch({ type: "SIGN_OUT" });
+          router.navigate("/intro");
         },
       },
     ]);
   };
-  const { state, ...rest } = props;
-  const newState = { ...state }; //copy from state before applying any filter. do not change original state
-  // newState.routes = newState.routes.filter((item) => item.name !== 'Profile'); //replace "Login' with your route name
 
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
-        {Object.keys(user).length === 0 ? (
+        {!profile.id ? (
           <View style={{ alignItems: "center", marginVertical: 20 }}>
             <Image
               style={styles.logo}
@@ -57,14 +63,14 @@ export default (props) => {
           <>
             <View style={styles.profileContainer}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate("Profile")}
+                onPress={() => router.navigate("/(drawer)/profile")}
               >
                 <Image
                   style={styles.profilePic}
                   source={
-                    user.profilePicture.length === 0
+                    profile.profilePicture.length === 0
                       ? require("@/assets/images/defaultprofile.png")
-                      : { uri: user.profilePicture }
+                      : { uri: profile.profilePicture }
                   }
                 />
               </TouchableOpacity>
@@ -77,7 +83,7 @@ export default (props) => {
                     paddingVertical: 0,
                   }}
                 >
-                  {user.name.firstname}
+                  {profile.name.firstname}
                 </Text>
                 <Text
                   style={{
@@ -93,8 +99,7 @@ export default (props) => {
           </>
         )}
         <View>
-          <DrawerItemList state={newState} {...rest} />
-          <Drawer.Section style={styles.drawerSection}></Drawer.Section>
+          <DrawerItemList {...props} />
           <View style={styles.social}>
             <OpenURL url={fbURL}>
               <Image
@@ -117,9 +122,7 @@ export default (props) => {
           </View>
         </View>
       </DrawerContentScrollView>
-      {Object.keys(user).length === 0 ? (
-        <></>
-      ) : (
+      {profile.id && (
         <DrawerItem
           onPress={Logout}
           label={() => (
@@ -138,7 +141,7 @@ export default (props) => {
                   fontFamily: "Roboto-Medium",
                 }}
               >
-                Logout
+                Sign Out
               </CustomText>
             </View>
           )}
@@ -147,6 +150,7 @@ export default (props) => {
 
       <View style={styles.version}>
         <DrawerItem
+          onPress={() => {}}
           label={() => (
             <CustomText
               style={{ color: Colors.grey, fontFamily: "Roboto-LightItalic" }}
@@ -195,14 +199,14 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 10,
   },
-  drawerSection: {
-    marginTop: 10,
-  },
   social: {
     marginTop: 20,
+    marginHorizontal: 10,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: Colors.grey,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 10,
   },
   logout: {
     flexDirection: "row",

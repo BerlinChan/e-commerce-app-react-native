@@ -5,7 +5,7 @@ type StateType = typeof initialState;
 type ActionType =
   | { type: "setToken"; token: string }
   | { type: "setLoading"; loading: boolean }
-  | { type: "signOut" };
+  | { type: "SIGN_OUT" };
 
 const initialState = {
   token: "",
@@ -13,9 +13,7 @@ const initialState = {
 };
 
 const AuthContext = createContext<StateType>(initialState);
-const AuthDispatchContext = createContext<React.Dispatch<ActionType> | null>(
-  null
-);
+const AuthDispatchContext = createContext<React.Dispatch<ActionType>>(() => {});
 
 function reducer(
   state: StateType = initialState,
@@ -35,7 +33,7 @@ function reducer(
         loading: action.loading,
       };
     }
-    case "signOut": {
+    case "SIGN_OUT": {
       SecureStore.setItemAsync("token", "");
       return {
         ...state,

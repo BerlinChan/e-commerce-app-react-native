@@ -112,8 +112,10 @@ const styles = StyleSheet.create({
   footer_header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   title: {
+    flexShrink: 1,
     fontSize: 17,
     color: Colors.text,
   },

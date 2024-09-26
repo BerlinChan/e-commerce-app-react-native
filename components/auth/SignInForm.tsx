@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -102,7 +102,7 @@ export const SignInForm: React.FC = () => {
         throw new Error(errorResData.err);
       }
       const resToken = await responseSignIn.json();
-      authDispatch!({ type: "setToken", token: resToken.token });
+      authDispatch({ type: "setToken", token: resToken.token });
 
       const responseProfile = await timeoutPromise(
         fetch(`${API_URL}/users/1`, {
@@ -119,10 +119,10 @@ export const SignInForm: React.FC = () => {
         throw new Error(errorResData.err);
       }
       const resProfile = await responseProfile.json();
-      profileDispatch!({ type: "setProfile", profile: resProfile });
+      profileDispatch({ type: "SET_PROFILE", profile: resProfile });
 
       reset();
-      router.dismissAll();
+      router.navigate("/(drawer)/(tabs)");
     } catch (err) {
       console.log(err);
     }

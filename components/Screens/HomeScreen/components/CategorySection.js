@@ -44,7 +44,7 @@ export class CategorySection extends React.PureComponent {
           />
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Product")}
+          onPress={() => navigation.navigate("/(tabs)/(homeTab)/product")}
           style={{ marginHorizontal: 10 }}
         >
           <BlurView tint="light" intensity={100} style={styles.seeMore}>

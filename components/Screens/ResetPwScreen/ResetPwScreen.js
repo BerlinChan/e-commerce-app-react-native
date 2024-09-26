@@ -54,7 +54,7 @@ const resetForm = (props) => {
         {
           text: "Okay",
           onPress: () => {
-            props.navigation.navigate("Home");
+            props.navigation.navigate("home");
           },
         },
       ]);

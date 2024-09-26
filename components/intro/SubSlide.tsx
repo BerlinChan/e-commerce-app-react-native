@@ -1,12 +1,26 @@
-import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Colors from "@/utils/Colors";
 import CustomText from "@/components/UI/CustomText";
 
-export const SubSlide = ({ subtitle, des, last, NextSlide, EnterApp }) => {
+type PropTypes = {
+  subtitle: string;
+  des: string;
+  last: boolean;
+  nextSlide: () => void;
+  enterApp: () => void;
+};
+
+export const SubSlide = ({
+  subtitle,
+  des,
+  last,
+  nextSlide,
+  enterApp,
+}: PropTypes) => {
   const bgColor = last ? "#2CB9B0" : "rgba(12,13,52,0.05)";
   const labelCover = last ? "#ffffff" : Colors.text;
-  const onPressHandler = last ? EnterApp : NextSlide;
+  const onPressHandler = last ? enterApp : nextSlide;
+
   return (
     <View style={styles.subSlideContainer}>
       <CustomText style={styles.subTitle}>{subtitle}</CustomText>
@@ -16,7 +30,7 @@ export const SubSlide = ({ subtitle, des, last, NextSlide, EnterApp }) => {
       <TouchableOpacity onPress={onPressHandler}>
         <View style={[styles.buttonContainer, { backgroundColor: bgColor }]}>
           <Text style={[styles.buttonLabel, { color: labelCover }]}>
-            {last ? "Vào Trang Chủ" : "Tiếp tục"}
+            {last ? "Go to Home Page" : "Continue"}
           </Text>
         </View>
       </TouchableOpacity>

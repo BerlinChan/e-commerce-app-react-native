@@ -17,13 +17,14 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 //Color
 import Colors from "@/utils/Colors";
 //number format
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 //Text
 import CustomText from "@/components/UI/CustomText";
 //PropTypes check
 import PropTypes from "prop-types";
+import { router } from "expo-router";
 
-export const renderRightAction = (text, color, action, x, progress) => {
+const renderRightAction = (text, color, action, x, progress) => {
   const trans = progress.interpolate({
     inputRange: [0, 1],
     outputRange: [x, 0],
@@ -43,6 +44,7 @@ export const renderRightAction = (text, color, action, x, progress) => {
 export const FavoriteItem = ({ item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const unmounted = useRef(false);
+
   useEffect(() => {
     return () => {
       unmounted.current = true;
@@ -74,7 +76,7 @@ export const FavoriteItem = ({ item }) => {
         },
         {
           text: "Agree",
-          onPress: () => dispatch(removeFavorite(item._id)),
+          onPress: () => dispatch(removeFavorite(item.id)),
         },
       ]
     );
@@ -99,74 +101,73 @@ export const FavoriteItem = ({ item }) => {
       </View>
     );
   };
+
   return (
-    <View>
-      <Swipeable
-        friction={2}
-        rightThreshold={20}
-        renderRightActions={RightActions}
-      >
-        <View style={styles.itemContainer}>
-          <TouchableOpacity
-            onPress={() => router.navigate("Detail", { item: item })}
+    <Swipeable
+      friction={2}
+      rightThreshold={20}
+      renderRightActions={RightActions}
+    >
+      <View style={styles.itemContainer}>
+        <TouchableOpacity
+          onPress={() => router.push(`/(tabs)/(homeTab)/detail/${item.id}`)}
+          style={{
+            marginLeft: 5,
+            width: "30%",
+            height: "100%",
+            marginRight: 10,
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
             style={{
-              marginLeft: 5,
-              width: "30%",
-              height: "100%",
-              marginRight: 10,
-              alignContent: "center",
-              justifyContent: "center",
+              height: 70,
+              width: "100%",
+              resizeMode: "contain",
+              borderRadius: 10,
             }}
-          >
-            <Image
+            source={{ uri: item.image }}
+            onLoadStart={() => {
+              setIsLoading(true);
+            }}
+            onLoadEnd={() => setIsLoading(false)}
+          />
+          {isLoading && (
+            <View
               style={{
-                height: 70,
+                position: "absolute",
                 width: "100%",
-                resizeMode: "contain",
-                borderRadius: 10,
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              source={{ uri: item.thumb }}
-              onLoadStart={() => {
-                setIsLoading(true);
-              }}
-              onLoadEnd={() => setIsLoading(false)}
-            />
-            {isLoading && (
-              <View
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <ActivityIndicator size="small" color={Colors.grey} />
-              </View>
-            )}
-          </TouchableOpacity>
-          <View style={styles.info}>
-            <CustomText style={styles.title}>{item.filename}</CustomText>
-            <CustomText style={styles.subText}>{item.type}</CustomText>
-            <View style={styles.rateContainer}>
-              <NumberFormat
-                value={item.price}
-                displayType={"text"}
-                thousandSeparator={true}
-                suffix={" đ"}
-                renderText={(formattedValue) => (
-                  <View style={styles.priceContainer}>
-                    <CustomText style={styles.price}>
-                      {formattedValue}
-                    </CustomText>
-                  </View>
-                )}
-              />
+            >
+              <ActivityIndicator size="small" color={Colors.grey} />
             </View>
+          )}
+        </TouchableOpacity>
+        <View style={styles.info}>
+          <CustomText style={styles.title}>{item.title}</CustomText>
+          <CustomText style={styles.subText}>{item.category}</CustomText>
+          <View style={styles.rateContainer}>
+            <NumericFormat
+              value={item.price}
+              displayType={"text"}
+              thousandSeparator={true}
+              suffix={" $"}
+              renderText={(formattedValue) => (
+                <View style={styles.priceContainer}>
+                  <CustomText style={styles.price} numberOfLines={2}>
+                    {formattedValue}
+                  </CustomText>
+                </View>
+              )}
+            />
           </View>
         </View>
-      </Swipeable>
-    </View>
+      </View>
+    </Swipeable>
   );
 };
 
@@ -184,18 +185,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   info: {
+    flexShrink: 1,
     height: "100%",
     flexDirection: "column",
     justifyContent: "flex-start",
     paddingVertical: 10,
-    width: "75%",
   },
   title: {
     fontSize: 15,
+    flex: 1,
   },
   subText: {
     fontSize: 13,
-
     color: Colors.grey,
   },
   rateContainer: {

@@ -44,10 +44,10 @@ export const FavoriteBody = ({ loadFavoriteProducts, isRefreshing }) => {
         </View>
       ) : (
         <FlatList
-          data={FavoriteProducts}
+          data={profile.favorites}
           onRefresh={loadFavoriteProducts}
           refreshing={isRefreshing}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             return <FavoriteItem item={item} />;
           }}

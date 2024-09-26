@@ -20,7 +20,9 @@ export class OrderBody extends React.PureComponent {
               {Messages["user.login.require"]}
             </CustomText>
             <View style={styles.button}>
-              <TouchableOpacity onPress={() => router.navigate("SignUp")}>
+              <TouchableOpacity
+                onPress={() => router.navigate("/(auth)/signInSignUp")}
+              >
                 <CustomText style={{ fontSize: 16, color: "#fff" }}>
                   Continue
                 </CustomText>

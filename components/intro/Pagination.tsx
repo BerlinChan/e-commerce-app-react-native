@@ -1,14 +1,22 @@
-import React from "react";
 import { View, Animated, StyleSheet, Dimensions } from "react-native";
 import Colors from "@/utils/Colors";
-//PropTypes check
-import PropTypes from "prop-types";
 
 const { height, width } = Dimensions.get("window");
 
 const DOT_SIZE = 20;
 
-export const Pagination = ({ scrollX, slides }) => {
+type PropTypes = {
+  scrollX: Animated.Value;
+  slides: {
+    id: number;
+    lable: string;
+    subtitle: string;
+    des: string;
+    imageUrl: string;
+  }[];
+};
+
+export const Pagination = ({ scrollX, slides }: PropTypes) => {
   const inputRange = [0, width, width * 2];
   const translateX = scrollX.interpolate({
     inputRange,
@@ -48,11 +56,6 @@ export const Pagination = ({ scrollX, slides }) => {
       </View>
     </View>
   );
-};
-
-Pagination.propTypes = {
-  scrollX: PropTypes.object.isRequired,
-  slides: PropTypes.array.isRequired,
 };
 
 const styles = StyleSheet.create({

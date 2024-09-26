@@ -16,6 +16,7 @@ import ShareItem from "@/components/UI/ShareItem";
 import CustomText from "@/components/UI/CustomText";
 //Color
 import Colors from "@/utils/Colors";
+import { router } from "expo-router";
 
 const { height } = Dimensions.get("window");
 
@@ -24,7 +25,7 @@ const HEADER_MIN_HEIGHT =
   Platform.OS === "android" ? 70 : height > 667 ? 80 : 70;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-export const Header = ({ navigation, scrollY, item }) => {
+export const Header = ({ scrollY, item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const headerTranslate = scrollY.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -41,11 +42,12 @@ export const Header = ({ navigation, scrollY, item }) => {
     outputRange: [1, 1, 0],
     extrapolate: "clamp",
   });
+
   return (
     <Animatable.View delay={500} animation="fadeInDown">
       <View style={styles.topBar}>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => router.back()}
           style={styles.goBackIcon}
         >
           <View>

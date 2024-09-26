@@ -13,8 +13,8 @@ const initialState = {
 };
 
 const OrderContext = createContext<StateType>(initialState);
-const OrderDispatchContext = createContext<React.Dispatch<ActionType> | null>(
-  null
+const OrderDispatchContext = createContext<React.Dispatch<ActionType>>(
+  () => {}
 );
 
 function reducer(

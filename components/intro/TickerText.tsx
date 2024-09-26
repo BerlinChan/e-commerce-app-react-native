@@ -9,18 +9,21 @@ import {
   Platform,
 } from "react-native";
 import slides from "@/mock/introSlides";
-//PropTypes check
-import PropTypes from "prop-types";
+
+type PropTypes = {
+  scrollX: Animated.Value;
+};
 
 const TICKER_HEIGHT = 50;
 const { height, width } = Dimensions.get("window");
 
-export const Ticker = ({ scrollX }) => {
+export const Ticker = ({ scrollX }: PropTypes) => {
   const inputRange = [0, width, width * 2];
   const translateY = scrollX.interpolate({
     inputRange,
     outputRange: [0, -TICKER_HEIGHT, -TICKER_HEIGHT * 2],
   });
+
   return (
     <View style={styles.tickerContainer}>
       <Animated.View style={{ transform: [{ translateY }] }}>
@@ -34,10 +37,6 @@ export const Ticker = ({ scrollX }) => {
       </Animated.View>
     </View>
   );
-};
-
-Ticker.propTypes = {
-  scrollX: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

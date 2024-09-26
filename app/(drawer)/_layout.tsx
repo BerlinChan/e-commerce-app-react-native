@@ -38,12 +38,6 @@ export default function AppDrawerNavigator() {
       getDisplay: (userId) => (userId ? undefined : "none"),
     },
     {
-      name: "signOut",
-      label: "SignOut",
-      icon: "logout",
-      getDisplay: (userId) => (userId ? undefined : "none"),
-    },
-    {
       name: "(auth)",
       label: "Sign In / Sign Up",
       icon: "login",

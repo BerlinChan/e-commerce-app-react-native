@@ -21,10 +21,12 @@ import Colors from "@/utils/Colors";
 import SearchItem from "./SearchItem";
 import { Easing } from "react-native-reanimated";
 import { TouchableOpacity, TextInput } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 // Calculate window size
 const { width, height } = Dimensions.get("window");
 
 export function Header(props) {
+  const navigation = useNavigation();
   const [isFocused, setIsFocus] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [productsFilter, setProductsFilter] = useState([]);
@@ -168,7 +170,7 @@ export function Header(props) {
           ]}
         >
           <View style={styles.header_inner}>
-            <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
               <Ionicons
                 name="menu-outline"
                 size={30}

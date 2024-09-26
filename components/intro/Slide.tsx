@@ -1,8 +1,18 @@
-import React from "react";
-import { View, Dimensions, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  Image,
+  ImageURISource,
+} from "react-native";
 
 const { height, width } = Dimensions.get("window");
-export const Slide = ({ imageUrl }) => {
+
+type PropTypes = {
+  imageUrl: ImageURISource;
+};
+
+export const Slide = ({ imageUrl }: PropTypes) => {
   return (
     <View style={styles.container}>
       <Image
@@ -16,6 +26,7 @@ export const Slide = ({ imageUrl }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 45,

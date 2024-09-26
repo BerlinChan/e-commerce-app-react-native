@@ -18,9 +18,6 @@ import { timeoutPromise } from "@/utils/Tools";
 import { API_URL } from "@/utils/Config";
 import { useProfile } from "@/context/ProfileContext";
 
-//height
-const { height } = Dimensions.get("window");
-
 export const HomeScreen = ({ navigation }) => {
   // const dispatch = useDispatch();
   //Header Animation

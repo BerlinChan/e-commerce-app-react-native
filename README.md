@@ -1,8 +1,9 @@
-This fork is a refactoring of the original project to upgrade to the latest Expo version (currently v51). It's WIP, many features are unavailable now.
+This fork is a refactoring of the original project to upgrade to the latest Expo version (currently v51). It's WIP, some features are unavailable now.
 
 ## Changes Detail
 - Upgrade Expo to version 51
 - Redux -> React useContext and useReducer hooks
+- Redux Form -> React Hook Form
 - React Navigation -> Expo Router
 - JavaScript -> TypeScript
 - React class components -> function component

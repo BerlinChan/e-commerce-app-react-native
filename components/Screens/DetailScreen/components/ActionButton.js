@@ -14,12 +14,12 @@ import LottieView from "lottie-react-native";
 //Animatable
 import * as Animatable from "react-native-animatable";
 import Messages from "@/messages/user";
+import { useProfile, useProfileDispatch } from "@/context/ProfileContext";
 
 //PropTypes check
 import PropTypes from "prop-types";
 
 export const ActionButton = ({
-  user,
   item,
   color,
   setShowSnackbar,
@@ -29,6 +29,8 @@ export const ActionButton = ({
 }) => {
   const cartLoading = false;
   const unmounted = useRef(false);
+  const profile = useProfile();
+  const profileDispatch = useProfileDispatch();
 
   useEffect(() => {
     return () => {
@@ -38,12 +40,12 @@ export const ActionButton = ({
 
   //Set Colors
   const addToCartAct = async () => {
-    if (Object.keys(user).length === 0) {
+    if (!profile.id) {
       setMessage(Messages["user.login.require"]);
       setShowSnackbar(true);
     } else {
       try {
-        // await dispatch(addToCart(item, user.token));
+        profileDispatch({ type: "ADD_TO_CART", payload: item });
         setModalVisible(true);
       } catch (err) {
         throw err;
@@ -51,7 +53,7 @@ export const ActionButton = ({
     }
   };
   const toggleFavorite = () => {
-    if (Object.keys(user).length === 0) {
+    if (!profile.id) {
       setMessage(Messages["user.login.require"]);
       setShowSnackbar(true);
     } else if (isFavorite) {
@@ -66,13 +68,13 @@ export const ActionButton = ({
           {
             text: "Agree",
             onPress: () => {
-              //dispatch(removeFavorite(item._id))
+              profileDispatch({ type: "REMOVE_FROM_FAVORITES", payload: item });
             },
           },
         ]
       );
     } else {
-      // dispatch(addFavorite(item));
+      profileDispatch({ type: "ADD_TO_FAVORITES", payload: item });
     }
   };
 
@@ -115,7 +117,6 @@ export const ActionButton = ({
 
 ActionButton.propTypes = {
   item: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
   setShowSnackbar: PropTypes.func.isRequired,
   isFavorite: PropTypes.bool.isRequired,

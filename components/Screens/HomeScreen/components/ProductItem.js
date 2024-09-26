@@ -18,17 +18,20 @@ import CustomText from "@/components/UI/CustomText";
 import { BlurView } from "expo-blur";
 //PropTypes check
 import PropTypes from "prop-types";
+import { router } from "expo-router";
 
 export class ProductItem extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { loading: true };
   }
+
   render() {
-    const { navigation, item } = this.props;
+    const { item } = this.props;
     const toDetail = () => {
-      navigation.navigate("Detail", { item });
+      router.navigate(`/(tabs)/(homeTab)/detail/${item.id}`);
     };
+
     return (
       <View style={{ width: "48%" }}>
         <BlurView tint="light" intensity={70} style={styles.container}>
@@ -87,7 +90,6 @@ export class ProductItem extends React.PureComponent {
 
 ProductItem.propTypes = {
   item: PropTypes.object.isRequired,
-  navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({

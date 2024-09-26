@@ -12,7 +12,7 @@ export default function Index() {
         tabBarIcon: ({ focused }) => {
           let iconName;
           const color = focused ? Colors.lighter_green : Colors.grey;
-          if (route.name === "index") {
+          if (route.name === "(homeTab)") {
             iconName = "home";
           } else if (route.name === "favoriteTab") {
             iconName = "hearto";
@@ -31,7 +31,7 @@ export default function Index() {
       })}
     >
       <Tabs.Screen
-        name="index"
+        name="(homeTab)"
         options={{
           tabBarLabel: "Home",
         }}

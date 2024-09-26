@@ -26,7 +26,7 @@ export class ModalComp extends React.PureComponent {
       this.props;
     const moveToCart = () => {
       setModalVisible(false);
-      navigation.navigate("Cart");
+      navigation.navigate("/(tabs)/(homeTab)/cart");
     };
 
     return (
@@ -61,7 +61,7 @@ export class ModalComp extends React.PureComponent {
               size={20}
             />
             <CustomText style={{ ...styles.success, color }}>
-              Sản phẩm đã được thêm vào giỏ hàng
+              Product has been added to cart
             </CustomText>
           </View>
           <View style={styles.modelInfo}>
@@ -82,13 +82,13 @@ export class ModalComp extends React.PureComponent {
                   {item.filename}
                 </CustomText>
                 <CustomText style={{ fontSize: 12, color: Colors.grey }}>
-                  Cung cấp bởi Cát Tường
+                  Provided by Anonymous User
                 </CustomText>
               </View>
               <CustomText
                 style={{ marginTop: 5, fontSize: 14, color: Colors.text }}
               >
-                Thành tiền:
+                Total amount:
               </CustomText>
               <NumberFormat price={item.price} />
             </View>
@@ -108,7 +108,7 @@ export class ModalComp extends React.PureComponent {
               ]}
               onPress={moveToCart}
             >
-              <CustomText style={styles.actionText}>Xem Giỏ Hàng</CustomText>
+              <CustomText style={styles.actionText}>View Cart</CustomText>
             </TouchableOpacity>
           </View>
         </View>

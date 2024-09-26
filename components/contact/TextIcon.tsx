@@ -1,10 +1,15 @@
-import React from "react";
 import { View, StyleSheet, TouchableOpacity, Linking } from "react-native";
 //Text
 import CustomText from "@/components/UI/CustomText";
-import LottieView from "lottie-react-native";
+import LottieView, { LottieViewProps } from "lottie-react-native";
 
-export const TextIcon = ({ icon, text, url }) => {
+type PropTypes = {
+  icon: LottieViewProps["source"];
+  text: string;
+  url: string;
+};
+
+export const TextIcon = ({ icon, text, url }: PropTypes) => {
   return (
     <View style={styles.detailContainer}>
       <LottieView

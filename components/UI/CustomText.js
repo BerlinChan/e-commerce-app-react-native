@@ -7,6 +7,7 @@ const CustomText = (props) => {
       allowFontScaling={false}
       selectable={props.selectable}
       style={{ ...styles.text, ...props.style }}
+      numberOfLines={props.numberOfLines}
     >
       {props.children}
     </Text>

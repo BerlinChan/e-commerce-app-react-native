@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions, Animated, Text } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 //Color
 import Colors from "@/utils/Colors";
 //Components
@@ -13,21 +13,24 @@ import {
 } from "./components";
 import { colorCheck, timeoutPromise } from "@/utils/Tools";
 import { API_URL } from "@/utils/Config";
+import { useProfile } from "@/context/ProfileContext";
+import { useNavigation } from "expo-router";
 
-export const DetailScreen = (props) => {
+export const DetailScreen = ({ id }) => {
   const scrollY = new Animated.Value(0);
   const user = {};
-  const { item } = props.route.params;
   const [product, setProduct] = useState({});
   const [isFetching, setIsFething] = useState(false);
   const [message, setMessage] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [color, setColor] = useState(Colors.lighter_green);
   //color
-  const type = item.color;
+  const type = "green";
   const [modalVisible, setModalVisible] = useState(false);
   //Favorite
-  const isFavorite = [].some((fav) => fav.id === product.id);
+  const profile = useProfile();
+  const isFavorite = profile.favorites.some((fav) => fav.id === product.id);
+  const navigation = useNavigation();
 
   useEffect(() => {
     setColor(colorCheck(type));
@@ -36,7 +39,7 @@ export const DetailScreen = (props) => {
       try {
         setIsFething(true);
         const response = await timeoutPromise(
-          fetch(`${API_URL}/products/${item.id}`, {
+          fetch(`${API_URL}/products/${id}`, {
             method: "GET",
           })
         );
@@ -53,14 +56,14 @@ export const DetailScreen = (props) => {
       }
     }
     fetchData();
-  }, [item]);
+  }, [id]);
 
   return (
     <View style={styles.container}>
       {showSnackbar && (
         <Snackbar checkVisible={showSnackbar} message={message} />
       )}
-      <Header navigation={props.navigation} scrollY={scrollY} item={product} />
+      <Header scrollY={scrollY} item={product} />
 
       <Animated.ScrollView
         scrollEventThrottle={1}
@@ -86,7 +89,7 @@ export const DetailScreen = (props) => {
         color={color}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        navigation={props.navigation}
+        navigation={navigation}
       />
     </View>
   );

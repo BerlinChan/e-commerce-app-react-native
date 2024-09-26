@@ -3,12 +3,13 @@ import * as SecureStore from "expo-secure-store";
 
 type StateType = typeof initialState;
 type ActionType =
-  | { type: "setProfile"; profile: StateType }
-  | { type: "setIsFirstOpen"; payload: boolean }
-  | { type: "signOut" };
+  | { type: "SET_PROFILE"; profile: StateType }
+  | { type: "SIGN_OUT" }
+  | { type: "ADD_TO_CART"; payload: any }
+  | { type: "ADD_TO_FAVORITES"; payload: any }
+  | { type: "REMOVE_FROM_FAVORITES"; payload: any };
 
 const initialState = {
-  isFirstOpen: true,
   loading: false,
   id: "",
   email: "",
@@ -30,12 +31,27 @@ const initialState = {
     },
   },
   phone: "",
-  favorites: [],
+  favorites: [
+    {
+      id: 5,
+      title:
+        "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+      price: 695,
+      description:
+        "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+      category: "jewelery",
+      image: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+      rating: {
+        rate: 4.6,
+        count: 400,
+      },
+    },
+  ],
 };
 
 const ProfileContext = createContext<StateType>(initialState);
-const ProfileDispatchContext = createContext<React.Dispatch<ActionType> | null>(
-  null
+const ProfileDispatchContext = createContext<React.Dispatch<ActionType>>(
+  () => {}
 );
 
 function reducer(
@@ -43,26 +59,31 @@ function reducer(
   action: ActionType
 ): StateType {
   switch (action.type) {
-    case "setProfile": {
+    case "SET_PROFILE": {
       SecureStore.setItemAsync("profile", JSON.stringify(action.profile));
       return {
         ...state,
         ...action.profile,
       };
     }
-    case "setIsFirstOpen": {
-      const newState = {
-        ...state,
-        isFirstOpen: action.payload,
-      };
-      SecureStore.setItemAsync("profile", JSON.stringify(newState));
-
-      return newState;
-    }
-    case "signOut": {
+    case "SIGN_OUT": {
       SecureStore.setItemAsync("profile", JSON.stringify(initialState));
       return {
         ...initialState,
+      };
+    }
+    case "ADD_TO_FAVORITES": {
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+      };
+    }
+    case "REMOVE_FROM_FAVORITES": {
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (fav) => fav.id !== action.payload.id
+        ),
       };
     }
     default:
