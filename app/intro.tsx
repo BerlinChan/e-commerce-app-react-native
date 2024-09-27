@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height, width } = Dimensions.get("window");
 
-export default function () {
+export default function IntroScreen() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollClick = useRef(null);
   const rootNavigationState = useRootNavigationState();

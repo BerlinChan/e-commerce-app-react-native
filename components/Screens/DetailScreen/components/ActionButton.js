@@ -28,7 +28,7 @@ export const ActionButton = ({
 }) => {
   const cartLoading = false;
   const { profile, profileDispatch } = useProfile();
-  const { cartDispatch } = useCart();
+  const { cart, cartDispatch } = useCart();
 
   const addToCartAct = async () => {
     if (!profile.id) {

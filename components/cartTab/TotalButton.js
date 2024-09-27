@@ -1,4 +1,3 @@
-import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 //Text
 import CustomText from "@/components/UI/CustomText";
@@ -9,44 +8,42 @@ import NumberFormat from "@/components/UI/NumberFormat";
 import PropTypes from "prop-types";
 import { router } from "expo-router";
 
-export class TotalButton extends React.PureComponent {
-  render() {
-    const { total, cartItems, cartId } = this.props;
-    return (
-      <View style={styles.total}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
+export const TotalButton = ({ total, cartItems, cartId }) => {
+  return (
+    <View style={styles.total}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <CustomText
+          style={{ fontSize: 14, fontWeight: "500", color: Colors.text }}
         >
-          <CustomText
-            style={{ fontSize: 14, fontWeight: "500", color: Colors.text }}
-          >
-            Total amount
-          </CustomText>
-          <NumberFormat price={total.toString()} style={{ fontSize: 14 }} />
-        </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.navigate("PreOrderScreen", {
-              cartItems,
-              total,
-              cartId,
-            });
-          }}
-        >
-          <View style={styles.btn}>
-            <CustomText style={{ color: "#fff", fontSize: 16 }}>
-              Place order
-            </CustomText>
-          </View>
-        </TouchableOpacity>
+          Total amount
+        </CustomText>
+        <NumberFormat price={total.toString()} style={{ fontSize: 14 }} />
       </View>
-    );
-  }
-}
+
+      <TouchableOpacity
+        onPress={() => {
+          router.navigate("/(tabs)/(cartTab)/preOrder", {
+            cartItems,
+            total,
+            cartId,
+          });
+        }}
+      >
+        <View style={styles.btn}>
+          <CustomText style={{ color: "#fff", fontSize: 16 }}>
+            Place order
+          </CustomText>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 TotalButton.propTypes = {
   total: PropTypes.number.isRequired,
   cartItems: PropTypes.array.isRequired,

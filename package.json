@@ -16,6 +16,7 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.1.0",
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/material-bottom-tabs": "^6.2.29",
     "@react-navigation/native": "^6.0.2",
@@ -45,13 +46,13 @@
     "react-native-loading-placeholder": "^0.0.6",
     "react-native-modalize": "^2.1.1",
     "react-native-paper": "^5.12.5",
+    "react-native-picker-select": "^9.3.1",
     "react-native-portalize": "^1.0.7",
     "react-native-reanimated": "~3.10.1",
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
     "react-native-step-indicator": "^1.0.3",
-    "react-number-format": "^5.4.2",
-    "@react-native-async-storage/async-storage": "1.23.1"
+    "react-number-format": "^5.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

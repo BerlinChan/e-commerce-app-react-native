@@ -16,7 +16,7 @@ import {
 //Colors
 import Colors from "@/utils/Colors";
 import CustomText from "@/components/UI/CustomText";
-import InputField from "../InputField";
+import InputField from "@/components/InputField";
 //Authentiation Touch ID Face ID
 import * as LocalAuthentication from "expo-local-authentication";
 import * as SecureStore from "expo-secure-store";
@@ -134,7 +134,7 @@ export const SignInForm: React.FC = () => {
     >
       <View style={styles.header}>
         <View>
-          <CustomText style={styles.title}>LOGIN</CustomText>
+          <CustomText style={styles.title}>Sign In</CustomText>
         </View>
       </View>
       <ScrollView>

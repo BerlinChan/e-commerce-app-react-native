@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import { TextInput } from "react-native-paper";
-import CustomText from "../../../components/UI/CustomText";
+import CustomText from "@/components/UI/CustomText";
 //Colors
-import Colors from "../../../utils/Colors";
+import Colors from "@/utils/Colors";
 
 export default renderField = ({
   label,
@@ -18,12 +18,13 @@ export default renderField = ({
   useEffect(() => {
     checkValidation(error);
   }, [onChangeText]);
+  
   return (
     <View>
       <View>
         <TextInput
           label={label}
-          mode='outlined'
+          mode="outlined"
           theme={{ colors: { primary: Colors.leave_green } }}
           selectionColor={Colors.leave_green}
           style={{
@@ -32,7 +33,7 @@ export default renderField = ({
             fontSize: 14,
           }}
           maxLength={maxLength}
-          autoCapitalize='words'
+          autoCapitalize="words"
           returnKeyType={returnKeyType ? returnKeyType : "next"}
           keyboardType={keyboardType}
           onChangeText={onChangeText}

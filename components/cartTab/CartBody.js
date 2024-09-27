@@ -43,7 +43,9 @@ export const CartBody = ({ profile, cart, loadCarts, isRefreshing }) => {
         <View style={styles.center}>
           <CustomText>{Messages["user.login.require"]}</CustomText>
           <View style={styles.nextButton}>
-            <TouchableOpacity onPress={() => router.navigate("SignUp")}>
+            <TouchableOpacity
+              onPress={() => router.navigate("/(auth)/signInSignUp")}
+            >
               <CustomText style={{ color: "#fff" }}>Continue</CustomText>
             </TouchableOpacity>
           </View>

@@ -1,8 +1,8 @@
 import React from "react";
 import { View, TextInput, TouchableWithoutFeedback } from "react-native";
-import CustomText from "../../../components/UI/CustomText";
+import CustomText from "@/components/UI/CustomText";
 //Colors
-import Colors from "../../../utils/Colors";
+import Colors from "@/utils/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default renderField = ({

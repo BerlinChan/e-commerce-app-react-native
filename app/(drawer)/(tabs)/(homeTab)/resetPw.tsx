@@ -1,3 +1,3 @@
-export default function HomeStackScreen() {
+export default function ResetPwScreen() {
   return <></>;
 }

@@ -1,8 +1,8 @@
-import { DetailScreen } from "@/components/Screens/DetailScreen";
+import { DetailScreen as DetailScreenComponent } from "@/components/Screens/DetailScreen";
 import { useLocalSearchParams } from "expo-router";
 
-export default function HomeStackScreen() {
+export default function DetailScreen() {
   const { id } = useLocalSearchParams();
 
-  return <DetailScreen id={id} />;
+  return <DetailScreenComponent id={id} />;
 }

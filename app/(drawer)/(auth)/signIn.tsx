@@ -10,7 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "@/utils/Colors";
 import { router } from "expo-router";
 
-export default function SignIn() {
+export default function SignInScreen() {
   const { height, width } = useWindowDimensions();
 
   return (

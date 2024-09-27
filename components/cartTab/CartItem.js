@@ -66,7 +66,7 @@ export const CartItem = ({ item, onAdd, onDes, onRemove }) => {
           </View>
         </View>
         <CustomText style={{ color: Colors.grey, fontSize: 12 }}>
-          Provided by e-commerce App
+          Provided by Anonymous User
         </CustomText>
         <NumberFormat price={sum.toString()} />
         <View style={styles.box}>

@@ -4,10 +4,10 @@ import { View, StyleSheet, Dimensions, Platform } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 //Provinces
-import ProvincesData from "../../../utils/ProvincesData";
-import Provinces from "../../../utils/Proinces";
+import ProvincesData from "@/utils/ProvincesData";
+import Provinces from "@/utils/Proinces";
 //Colors
-import Colors from "../../../utils/Colors";
+import Colors from "@/utils/Colors";
 //PropTypes check
 import PropTypes from "prop-types";
 
@@ -17,8 +17,9 @@ const { width } = Dimensions.get("window");
 const Address = ({ getInfo }) => {
   const [selectedProvince, setselectedProvince] = useState("");
   const [selectedTown, setselectedTown] = useState("");
-  const initialTown = [{ label: "Chọn Quận/Huyện", value: "1" }];
+  const initialTown = [{ label: "Select City", value: "1" }];
   const [getTowns, setGetTowns] = useState(initialTown);
+
   //Filter Towns
   const townsFilter = useCallback(
     (name) => {
@@ -43,6 +44,7 @@ const Address = ({ getInfo }) => {
     },
     [selectedProvince]
   );
+
   //get Address
   useEffect(() => {
     getInfo(selectedProvince, selectedTown);
@@ -54,18 +56,19 @@ const Address = ({ getInfo }) => {
     ) : (
       <MaterialIcons
         style={styles.icon}
-        name='keyboard-arrow-down'
+        name="keyboard-arrow-down"
         size={25}
-        color='black'
+        color="black"
       />
     );
+
   return (
     <View style={styles.container}>
       <View style={[styles.boxSelect, { marginTop: 15 }]}>
         <View>
           <RNPickerSelect
             onValueChange={(value) => townsFilter(value)}
-            placeholder={{ label: "Tỉnh/Thành phố", value: "1" }}
+            placeholder={{ label: "Province", value: "1" }}
             items={Provinces}
             style={pickerSelectStyles}
             allowFontScaling={false}
@@ -77,7 +80,7 @@ const Address = ({ getInfo }) => {
         <View>
           <RNPickerSelect
             onValueChange={(value) => setselectedTown(value)}
-            placeholder={{ label: "Quận/Huyện", value: "" }}
+            placeholder={{ label: "City", value: "1" }}
             items={getTowns}
             value={selectedTown}
             style={pickerSelectStyles}

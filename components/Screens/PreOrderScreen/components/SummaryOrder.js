@@ -1,53 +1,47 @@
-import React from "react";
 import { View, StyleSheet } from "react-native";
 //Number
-import NumberFormat from "../../../components/UI/NumberFormat";
+import NumberFormat from "@/components/UI/NumberFormat";
 //PreOrderItem
-import PreOrderItem from "./PreOrderItem";
+import PreOrderItem from "@/components/Screens/PreOrderScreen/components/PreOrderItem";
 //Text
-import CustomText from "../../../components/UI/CustomText";
-import Colors from "../../../utils/Colors";
-//PropTypes check
-import PropTypes from "prop-types";
+import CustomText from "@/components/UI/CustomText";
+import Colors from "@/utils/Colors";
 
-export class SummaryOrder extends React.PureComponent {
-  render() {
-    const { cartItems, total } = this.props;
-    return (
-      <View style={styles.container}>
-        <CustomText style={{ ...styles.title, marginVertical: 5 }}>
-          Tóm tắt đơn hàng
-        </CustomText>
-        <View style={{ backgroundColor: "#fff", paddingHorizontal: 10 }}>
-          {cartItems.map((item) => {
-            return (
-              <View key={item.item.createdAt}>
-                <PreOrderItem item={item} />
-              </View>
-            );
-          })}
-        </View>
-        <View style={styles.total}>
-          <CustomText
-            style={{
-              fontSize: 15,
-              color: Colors.text,
-              fontWeight: "500",
-            }}
-          >
-            Thành tiền
-          </CustomText>
-          <NumberFormat price={total.toString()} />
-        </View>
+export const SummaryOrder = ({ cartItems, total }) => {
+  return (
+    <View style={styles.container}>
+      <CustomText style={{ ...styles.title, marginVertical: 5 }}>
+        Order Summary
+      </CustomText>
+      <View style={{ backgroundColor: "#fff", paddingHorizontal: 10 }}>
+        {cartItems.map((item) => {
+          return (
+            <View key={item.createdAt}>
+              <PreOrderItem item={item} />
+            </View>
+          );
+        })}
       </View>
-    );
-  }
-}
-
-SummaryOrder.propTypes = {
-  cartItems: PropTypes.array.isRequired,
-  total: PropTypes.number.isRequired,
+      <View style={styles.total}>
+        <CustomText
+          style={{
+            fontSize: 15,
+            color: Colors.text,
+            fontWeight: "500",
+          }}
+        >
+          Total amount
+        </CustomText>
+        <NumberFormat price={total.toString()} />
+      </View>
+    </View>
+  );
 };
+
+// SummaryOrder.propTypes = {
+//   cartItems: PropTypes.array.isRequired,
+//   total: PropTypes.number.isRequired,
+// };
 
 const styles = StyleSheet.create({
   container: {

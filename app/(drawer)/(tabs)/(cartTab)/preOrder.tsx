@@ -2,32 +2,44 @@ import React, { useState, useEffect, useRef } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { View, StyleSheet, ScrollView } from "react-native";
 //Address
-import Address from "./components/Address";
+import Address from "@/components/Screens/PreOrderScreen/components/Address";
 //Redux
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 //Steps
-import Colors from "../../utils/Colors";
-import { Header, SummaryOrder, TotalButton, UserForm } from "./components";
-import Loader from "../../components/Loaders/Loader";
+import Colors from "@/utils/Colors";
+import {
+  Header,
+  SummaryOrder,
+  TotalButton,
+  UserForm,
+} from "@/components/Screens/PreOrderScreen/components";
+import Loader from "@/components/Loaders/Loader";
+import { router } from "expo-router";
+import { useCart } from "@/context/CartContext";
 
-export const PreOrderScreen = (props) => {
+export default function PreOrderScreen() {
   const unmounted = useRef(false);
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
-  const carts = useSelector((state) => state.cart.cartItems);
-  const { cartItems, total, cartId } = props.route.params;
+  const { cart } = useCart();
+  // const { cartItems, total, cartId } = props.route.params;
   const [error, setError] = useState("");
-  //Can Toi uu lai
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [province, setProvince] = useState("");
   const [town, setTown] = useState("");
+  const total = cart.items.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0
+  );
+
   useEffect(() => {
     return () => {
       unmounted.current = true;
     };
   }, []);
+
   useEffect(() => {
     if (isFocused) {
       setLoading(true);
@@ -38,6 +50,7 @@ export const PreOrderScreen = (props) => {
     }
     return;
   }, [isFocused]);
+
   const getInfo = (province, town) => {
     setProvince(province);
     setTown(town);
@@ -51,15 +64,15 @@ export const PreOrderScreen = (props) => {
     setError(error);
   };
   let orderItems = [];
-  cartItems.map((item) => {
-    orderItems.push({ item: item.item._id, quantity: item.quantity });
+  cart.items.map((item) => {
+    orderItems.push({ item: item.id, quantity: item.quantity });
   });
 
   const fullAddress = `${address}, ${town} ,${province}`;
   const toPayment = async () => {
     try {
       if (error == undefined && province.length !== 0 && town.length !== 0) {
-        props.navigation.navigate("Payment", {
+        router.navigate("Payment", {
           screen: "PaymentScreen",
           params: {
             fullAddress,
@@ -68,7 +81,7 @@ export const PreOrderScreen = (props) => {
             phone,
             total,
             cartId,
-            carts,
+            cart,
           },
         });
       } else {
@@ -90,14 +103,16 @@ export const PreOrderScreen = (props) => {
     //   },
     // });
   };
+
   useEffect(() => {
-    if (carts.items.length === 0) {
-      props.navigation.goBack();
+    if (cart.items.length === 0) {
+      router.back();
     }
-  }, [carts.items]);
+  }, [cart.items]);
+
   return (
     <View style={styles.container}>
-      <Header navigation={props.navigation} />
+      <Header navigation={router} />
       {loading ? (
         <Loader />
       ) : (
@@ -108,14 +123,15 @@ export const PreOrderScreen = (props) => {
               checkValidation={checkValidation}
             />
             <Address getInfo={getInfo} />
-            <SummaryOrder cartItems={cartItems} total={total} />
+            <SummaryOrder cartItems={cart.items} total={total} />
           </ScrollView>
           <TotalButton toPayment={toPayment} />
         </>
       )}
     </View>
   );
-};
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.white },
 });

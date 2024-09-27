@@ -28,7 +28,9 @@ export const FavoriteBody = ({ loadFavoriteProducts, isRefreshing }) => {
               marginTop: 10,
             }}
           >
-            <TouchableOpacity onPress={() => router.navigate("SignUp")}>
+            <TouchableOpacity
+              onPress={() => router.navigate("/(auth)/signInSignUp")}
+            >
               <CustomText style={{ color: "#fff" }}>Continue</CustomText>
             </TouchableOpacity>
           </View>

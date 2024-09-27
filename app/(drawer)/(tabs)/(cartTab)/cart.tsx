@@ -54,16 +54,16 @@ export default function CartScreen() {
   return (
     <View style={styles.container}>
       <Header profile={profile} cart={cart} />
-      {loading ? <Loader /> : <></>}
+      {loading ? <Loader /> : null}
       <CartBody
         profile={profile}
         cart={cart}
         loadCarts={loadCarts}
         isRefreshing={isRefreshing}
       />
-      {profile.id && cart.items.length && (
+      {profile.id && cart.items.length ? (
         <TotalButton total={total} cartItems={cart.items} cartId={cart.id} />
-      )}
+      ) : null}
     </View>
   );
 }

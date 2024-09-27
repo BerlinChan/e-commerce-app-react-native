@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  Pressable,
 } from "react-native";
 //import CustomText
 import CustomText from "@/components/UI/CustomText";
@@ -40,7 +41,10 @@ export const ModalComp = ({
       transparent={true}
       visible={modalVisible}
     >
-      <View style={styles.modalContainer}></View>
+      <Pressable
+        style={styles.modalContainer}
+        onPress={() => setModalVisible(false)}
+      />
       <View style={styles.modal}>
         <TouchableOpacity
           animation="zoomIn"
@@ -65,10 +69,10 @@ export const ModalComp = ({
         <View style={styles.modelInfo}>
           <View style={{ borderRadius: 20, width: "45%", overflow: "hidden" }}>
             <Image
-              source={{ uri: item.thumb }}
+              source={{ uri: item.image }}
               style={{
                 height: 100,
-                resizeMode: "stretch",
+                resizeMode: "cover",
               }}
             />
           </View>

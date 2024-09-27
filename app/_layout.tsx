@@ -71,10 +71,7 @@ export default function Layout() {
                 <Stack
                   initialRouteName="intro"
                   screenOptions={{ headerShown: false }}
-                >
-                  <Stack.Screen name="intro" />
-                  <Stack.Screen name="(drawer)" />
-                </Stack>
+                />
               </OrderProvider>
             </CartProvider>
           </ProfileProvider>

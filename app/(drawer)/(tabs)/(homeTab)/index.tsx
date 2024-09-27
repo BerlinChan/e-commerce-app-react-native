@@ -1,6 +1,6 @@
 import { router } from "expo-router";
-import { HomeScreen } from "@/components/Screens/HomeScreen";
+import { HomeScreen as HomeScreenComponent } from "@/components/Screens/HomeScreen";
 
-export default function HomeStackScreen() {
-  return <HomeScreen router={router} />;
+export default function HomeScreen() {
+  return <HomeScreenComponent router={router} />;
 }
