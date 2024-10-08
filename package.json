@@ -42,6 +42,7 @@
     "react-hook-form": "^7.53.0",
     "react-native": "0.74.5",
     "react-native-animatable": "^1.4.0",
+    "react-native-credit-card-input": "^1.0.0",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-loading-placeholder": "^0.0.6",
     "react-native-modalize": "^2.1.1",

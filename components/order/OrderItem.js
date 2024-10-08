@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 //Colors
 import Colors from "@/utils/Colors";
 //Item
-import ItemList from "@/components/Screens/PreOrderScreen/components/PreOrderItem";
+import ItemList from "@/components/PreOrder/PreOrderItem";
 //Number format
 import NumberFormat from "@/components/UI/NumberFormat";
 //PropTypes check

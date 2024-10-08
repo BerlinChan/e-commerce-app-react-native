@@ -1,8 +1,9 @@
+// TODO: remove React import
 import React, { useState, useEffect, useRef } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { View, StyleSheet, ScrollView } from "react-native";
 //Address
-import Address from "@/components/Screens/PreOrderScreen/components/Address";
+import Address from "@/components/PreOrder/Address";
 //Redux
 // import { useSelector } from "react-redux";
 //Steps
@@ -12,33 +13,22 @@ import {
   SummaryOrder,
   TotalButton,
   UserForm,
-} from "@/components/Screens/PreOrderScreen/components";
+} from "@/components/PreOrder";
 import Loader from "@/components/Loaders/Loader";
 import { router } from "expo-router";
 import { useCart } from "@/context/CartContext";
 
 export default function PreOrderScreen() {
-  const unmounted = useRef(false);
+  const userFormRef = useRef(null);
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const { cart } = useCart();
-  // const { cartItems, total, cartId } = props.route.params;
-  const [error, setError] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
   const [province, setProvince] = useState("");
   const [town, setTown] = useState("");
   const total = cart.items.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
     0
   );
-
-  useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
-  }, []);
 
   useEffect(() => {
     if (isFocused) {
@@ -55,53 +45,29 @@ export default function PreOrderScreen() {
     setProvince(province);
     setTown(town);
   };
-  const getReceiver = (name, phone, address) => {
-    setName(name);
-    setPhone(phone);
-    setAddress(address);
-  };
-  const checkValidation = (error) => {
-    setError(error);
-  };
-  let orderItems = [];
-  cart.items.map((item) => {
-    orderItems.push({ item: item.id, quantity: item.quantity });
-  });
 
-  const fullAddress = `${address}, ${town} ,${province}`;
   const toPayment = async () => {
-    try {
-      if (error == undefined && province.length !== 0 && town.length !== 0) {
-        router.navigate("Payment", {
-          screen: "PaymentScreen",
+    userFormRef.current?.onSubmit(({ receiverName, phone, address }) => {
+      const fullAddress = `${address}, ${town} ,${province}`;
+      const orderItems = cart.items.map((item) => ({
+        item: item.id,
+        quantity: item.quantity,
+      }));
+      if (receiverName && phone && address && province && town) {
+        router.navigate("/(cartTab)/payment", {
           params: {
             fullAddress,
             orderItems,
-            name,
+            name: receiverName,
             phone,
             total,
-            cartId,
             cart,
           },
         });
       } else {
         alert("Please enter complete information.");
       }
-    } catch (err) {
-      throw err;
-    }
-    // props.navigation.navigate("Payment", {
-    //   screen: "PaymentScreen",
-    //   params: {
-    //     fullAddress,
-    //     orderItems,
-    //     name,
-    //     phone,
-    //     total,
-    //     cartId,
-    //     carts,
-    //   },
-    // });
+    })();
   };
 
   useEffect(() => {
@@ -118,10 +84,7 @@ export default function PreOrderScreen() {
       ) : (
         <>
           <ScrollView>
-            <UserForm
-              getReceiver={getReceiver}
-              checkValidation={checkValidation}
-            />
+            <UserForm ref={userFormRef} />
             <Address getInfo={getInfo} />
             <SummaryOrder cartItems={cart.items} total={total} />
           </ScrollView>

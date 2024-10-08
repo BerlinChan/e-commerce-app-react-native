@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 //Number
 import NumberFormat from "@/components/UI/NumberFormat";
 //PreOrderItem
-import PreOrderItem from "@/components/Screens/PreOrderScreen/components/PreOrderItem";
+import PreOrderItem from "@/components/PreOrder/PreOrderItem";
 //Text
 import CustomText from "@/components/UI/CustomText";
 import Colors from "@/utils/Colors";
@@ -16,7 +16,7 @@ export const SummaryOrder = ({ cartItems, total }) => {
       <View style={{ backgroundColor: "#fff", paddingHorizontal: 10 }}>
         {cartItems.map((item) => {
           return (
-            <View key={item.createdAt}>
+            <View key={item.id}>
               <PreOrderItem item={item} />
             </View>
           );

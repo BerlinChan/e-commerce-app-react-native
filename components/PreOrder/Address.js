@@ -15,8 +15,8 @@ const { width } = Dimensions.get("window");
 // TextInput.defaultProps.allowFontScaling = false;
 
 const Address = ({ getInfo }) => {
-  const [selectedProvince, setselectedProvince] = useState("");
-  const [selectedTown, setselectedTown] = useState("");
+  const [selectedProvince, setselectedProvince] = useState("New York"); // TODO: remove hard-coded value
+  const [selectedTown, setselectedTown] = useState("New York"); // TODO: remove hard-coded value
   const initialTown = [{ label: "Select City", value: "1" }];
   const [getTowns, setGetTowns] = useState(initialTown);
 

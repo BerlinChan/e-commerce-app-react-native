@@ -6,13 +6,12 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
-//Icon
-import { Ionicons } from "@expo/vector-icons";
+import Colors from "@/utils/Colors";
+//Text
 import CustomText from "@/components/UI/CustomText";
 //Steps
 import OrderSteps from "@/components/UI/OrderSteps";
-//Colors
-import Colors from "@/utils/Colors";
+import { Ionicons } from "@expo/vector-icons";
 //PropTypes check
 import PropTypes from "prop-types";
 
@@ -25,28 +24,28 @@ export const Header = ({ navigation }) => {
         <View
           style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.back()}>
             <Ionicons
               name="arrow-back"
-              size={30}
+              size={28}
               color={Colors.lighter_green}
             />
           </TouchableOpacity>
         </View>
-
         <View style={styles.orderStepsContainer}>
-          <CustomText style={styles.title}> Địa chỉ giao hàng </CustomText>
+          <CustomText style={styles.title}> Payment Methods </CustomText>
           <View style={styles.orderSteps}>
-            <OrderSteps position={1} />
+            <OrderSteps position={2} />
           </View>
         </View>
-
         <View />
       </View>
     </View>
   );
 };
 
+// TODO: remove propTypes
+// TODO: convert to tsx file
 Header.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
@@ -55,6 +54,7 @@ const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
+    // TODO: replace with SafeArea
     height: Platform.OS === "android" ? 100 : height > 667 ? 115 : 100,
   },
   innerHeader: {

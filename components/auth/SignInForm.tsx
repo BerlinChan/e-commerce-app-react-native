@@ -36,7 +36,7 @@ export const SignInForm: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, touchedFields, isLoading },
+    formState: { isLoading },
     reset,
   } = useForm<FormType>({
     defaultValues: {
@@ -153,15 +153,18 @@ export const SignInForm: React.FC = () => {
                 rules={{
                   required: "Username must not be empty",
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error, isTouched },
+                }) => (
                   <InputField
                     keyboardType="default"
                     label="Username"
                     icon="account"
                     input={{ onBlur, onChange, value }}
                     meta={{
-                      error: errors.username?.message,
-                      touched: touchedFields.username,
+                      error: error?.message,
+                      touched: isTouched,
                     }}
                   />
                 )}
@@ -178,7 +181,10 @@ export const SignInForm: React.FC = () => {
                   maxLength: 100,
                   required: "Password must not be empty",
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error, isTouched },
+                }) => (
                   <InputField
                     keyboardType="default"
                     label="Password"
@@ -189,8 +195,8 @@ export const SignInForm: React.FC = () => {
                     setShowPass={setShowPass}
                     input={{ onBlur, onChange, value }}
                     meta={{
-                      error: errors.password?.message,
-                      touched: touchedFields.password,
+                      error: error?.message,
+                      touched: isTouched,
                     }}
                   />
                 )}

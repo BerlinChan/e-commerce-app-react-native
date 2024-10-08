@@ -27,12 +27,14 @@ export default InputField = ({
           selectionColor={Colors.leave_green}
           theme={{ colors: { primary: Colors.leave_green } }}
           left={
-            <TextInput.Icon
-              icon={icon}
-              size={24}
-              color={Colors.lighter_green}
-              style={{ paddingRight: 10 }}
-            />
+            icon ? (
+              <TextInput.Icon
+                icon={icon}
+                size={24}
+                color={Colors.lighter_green}
+                style={{ paddingRight: 10 }}
+              />
+            ) : null
           }
           style={{
             fontSize: 14,
@@ -63,9 +65,7 @@ export default InputField = ({
         )}
       </View>
       {touched && error && (
-        <CustomText
-          style={{ color: "red", marginHorizontal: 15, marginTop: 5 }}
-        >
+        <CustomText style={{ color: "red", marginHorizontal: 15 }}>
           {error}
         </CustomText>
       )}
