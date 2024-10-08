@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Pressable, SafeAreaView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+// TODO: replace TouchableOpacity with Pressable
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TextInput, Button } from "react-native-paper";
 import Colors from "@/utils/Colors";
@@ -24,7 +25,7 @@ export default function EditProfileScreen() {
     if (phone.length === 10 && address.length >= 6) {
       try {
         // await dispatch(EditInfo(phone, address));
-        router.navigate("/profile");
+        router.navigate("/(drawer)/(profile)/profile");
       } catch (err) {
         alert(err);
       }
@@ -38,12 +39,12 @@ export default function EditProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {profile.loading ? <Loader /> : <></>}
       <View style={styles.backIcon}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <Pressable onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={30} color="black" />
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View>
         <View style={styles.infoContainer}>
@@ -96,7 +97,7 @@ export default function EditProfileScreen() {
           </Button>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -7,6 +7,7 @@ export default function Index() {
 
   return (
     <Tabs
+      initialRouteName="(homeTab)"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ focused }) => {

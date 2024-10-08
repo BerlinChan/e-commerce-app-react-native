@@ -36,7 +36,7 @@ export const PaymentBody = ({ navigation, payByCard, setPayByCard, token }) => {
             status={payByCard ? "checked" : "unchecked"}
             color={Colors.lighter_green}
             onPress={() =>
-              navigation.navigate("/(cartTab)/payment/addCreditCard")
+              navigation.navigate("/(cartTab)/(payment)/addCreditCard")
             }
             // containerStyle={{ padding: 5 }}
           />

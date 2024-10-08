@@ -1,36 +1,12 @@
 import { View, StyleSheet, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import {
-  PlaceholderContainer,
-  Placeholder,
-} from "react-native-loading-placeholder";
 
 const { height, width } = Dimensions.get("window");
 
-const Gradient = () => {
-  return (
-    <LinearGradient
-      colors={["#eeeeee", "#dddddd", "#eeeeee"]}
-      start={{ x: 1.0, y: 0.0 }}
-      end={{ x: 0.0, y: 0.0 }}
-      style={{
-        flex: 1,
-        width: 120,
-      }}
-    />
-  );
-};
-
 const SkeletonLoadingCart = () => {
   return (
-    <PlaceholderContainer
-      style={styles.container}
-      animatedComponent={<Gradient />}
-      duration={1000}
-      replace={true}
-    >
+    <View style={styles.container}>
       <View style={styles.content}>
-        <Placeholder
+        <View
           style={{
             ...styles.placeholder,
             width: "35%",
@@ -39,14 +15,14 @@ const SkeletonLoadingCart = () => {
           }}
         />
         <View style={{ width: "50%" }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "100%",
               height: 15,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "90%",
@@ -54,7 +30,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "50%",
@@ -62,7 +38,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "60%",
@@ -73,7 +49,7 @@ const SkeletonLoadingCart = () => {
         </View>
       </View>
       <View style={styles.content}>
-        <Placeholder
+        <View
           style={{
             ...styles.placeholder,
             width: "35%",
@@ -82,14 +58,14 @@ const SkeletonLoadingCart = () => {
           }}
         />
         <View style={{ width: "50%" }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "100%",
               height: 15,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "90%",
@@ -97,7 +73,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "50%",
@@ -105,7 +81,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "60%",
@@ -116,7 +92,7 @@ const SkeletonLoadingCart = () => {
         </View>
       </View>
       <View style={styles.content}>
-        <Placeholder
+        <View
           style={{
             ...styles.placeholder,
             width: "35%",
@@ -125,14 +101,14 @@ const SkeletonLoadingCart = () => {
           }}
         />
         <View style={{ width: "50%" }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "100%",
               height: 15,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "90%",
@@ -140,7 +116,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "50%",
@@ -148,7 +124,7 @@ const SkeletonLoadingCart = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "60%",
@@ -158,7 +134,7 @@ const SkeletonLoadingCart = () => {
           />
         </View>
       </View>
-    </PlaceholderContainer>
+    </View>
   );
 };
 

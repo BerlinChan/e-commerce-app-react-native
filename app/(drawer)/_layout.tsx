@@ -32,7 +32,7 @@ export default function AppDrawerNavigator() {
       getDisplay: (userId) => (userId ? undefined : "none"),
     },
     {
-      name: "profile",
+      name: "(profile)",
       label: "Profile",
       icon: "face-man-profile",
       getDisplay: (userId) => (userId ? undefined : "none"),
@@ -47,6 +47,7 @@ export default function AppDrawerNavigator() {
 
   return (
     <Drawer
+      initialRouteName="(tabs)"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,

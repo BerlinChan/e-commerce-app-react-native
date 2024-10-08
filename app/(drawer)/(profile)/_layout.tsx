@@ -1,8 +1,9 @@
 import { Stack } from "expo-router";
 
-export default function HomeStackScreen() {
+export default function ProfileStackScreen() {
   return (
     <Stack
+      initialRouteName="profile"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,

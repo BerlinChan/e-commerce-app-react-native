@@ -41,7 +41,7 @@ export default function IntroScreen() {
 
   const enterApp = async () => {
     AsyncStorage.setItem("skipIntro", "true");
-    router.navigate("/(tabs)");
+    router.navigate("/(drawer)/(tabs)/(homeTab)");
   };
 
   return (

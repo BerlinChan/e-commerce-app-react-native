@@ -1,17 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Dimensions, Alert } from "react-native";
+import { useState, useEffect, useRef } from "react";
 import {
-  EditButton,
-  ProfilePic,
-  ProfileBody,
-} from "@/components/Screens/ProfileScreen/components";
+  View,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  Pressable,
+  SafeAreaView,
+} from "react-native";
+import { EditButton, ProfilePic, ProfileBody } from "@/components/Profile";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import Loader from "@/components/Loaders/Loader";
 import { useProfile } from "@/context/ProfileContext";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "@/utils/Colors";
 
 const { width, height } = Dimensions.get("window");
 
 export default function ProfileScreen() {
+  const navigation = useNavigation();
   const { profile, profileDispatch } = useProfile();
   const [imageUri, setImageUri] = useState("");
   const [filename, setFilename] = useState("");
@@ -44,7 +52,17 @@ export default function ProfileScreen() {
   return (
     <ActionSheetProvider>
       <View style={styles.container}>
-        <View style={styles.header}></View>
+        <SafeAreaView style={styles.header}>
+          <Pressable
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          >
+            <Ionicons
+              name="menu-outline"
+              size={30}
+              color={Colors.lighter_green}
+            />
+          </Pressable>
+        </SafeAreaView>
         {profile.loading ? <Loader /> : <></>}
         <View style={styles.profileContainer}>
           <View style={styles.profileBox}>
@@ -80,7 +98,7 @@ const styles = StyleSheet.create({
     width,
     flexDirection: "row",
     height: 0.15 * height,
-    justifyContent: "center",
+    marginHorizontal: 10,
   },
   profileContainer: {
     width,

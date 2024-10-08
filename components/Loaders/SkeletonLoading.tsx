@@ -1,36 +1,12 @@
 import { View, StyleSheet, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import {
-  PlaceholderContainer,
-  Placeholder,
-} from "react-native-loading-placeholder";
 
 const { height, width } = Dimensions.get("window");
 
-const Gradient = () => {
-  return (
-    <LinearGradient
-      colors={["#eeeeee", "#dddddd", "#eeeeee"]}
-      start={{ x: 1.0, y: 0.0 }}
-      end={{ x: 0.0, y: 0.0 }}
-      style={{
-        flex: 1,
-        width: 120,
-      }}
-    />
-  );
-};
-
 const Skeleton = () => {
   return (
-    <PlaceholderContainer
-      style={styles.container}
-      animatedComponent={<Gradient />}
-      duration={1000}
-      replace={true}
-    >
+    <View style={styles.container}>
       <View style={styles.banner}>
-        <Placeholder
+        <View
           style={{
             ...styles.placeholder,
             width: "100%",
@@ -39,7 +15,7 @@ const Skeleton = () => {
         />
       </View>
       <View style={styles.text}>
-        <Placeholder
+        <View
           style={{
             ...styles.placeholder,
             width: "60%",
@@ -49,14 +25,14 @@ const Skeleton = () => {
       </View>
       <View style={styles.content}>
         <View style={{ width: "49%" }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
               height: 95,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "80%",
@@ -64,7 +40,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "30%",
@@ -72,7 +48,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
@@ -82,14 +58,14 @@ const Skeleton = () => {
           />
         </View>
         <View style={{ width: "49%" }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
               height: 95,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "80%",
@@ -97,7 +73,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "30%",
@@ -105,7 +81,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
@@ -115,14 +91,14 @@ const Skeleton = () => {
           />
         </View>
         <View style={{ width: "49%", marginTop: 15 }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
               height: 95,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "80%",
@@ -130,7 +106,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "30%",
@@ -138,7 +114,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
@@ -148,14 +124,14 @@ const Skeleton = () => {
           />
         </View>
         <View style={{ width: "49%", marginTop: 15 }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
               height: 95,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "80%",
@@ -163,7 +139,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "30%",
@@ -171,7 +147,7 @@ const Skeleton = () => {
               marginTop: 5,
             }}
           />
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "95%",
@@ -185,7 +161,7 @@ const Skeleton = () => {
         <View />
       ) : (
         <View style={{ ...styles.text, marginTop: 10 }}>
-          <Placeholder
+          <View
             style={{
               ...styles.placeholder,
               width: "100%",
@@ -194,7 +170,7 @@ const Skeleton = () => {
           />
         </View>
       )}
-    </PlaceholderContainer>
+    </View>
   );
 };
 

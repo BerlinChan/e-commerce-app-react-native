@@ -61,7 +61,7 @@ export default (props) => {
           <>
             <View style={styles.profileContainer}>
               <TouchableOpacity
-                onPress={() => router.navigate("/(drawer)/profile")}
+                onPress={() => router.navigate("/(drawer)/(profile)")}
               >
                 <Image
                   style={styles.profilePic}
