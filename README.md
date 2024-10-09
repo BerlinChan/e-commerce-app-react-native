@@ -71,14 +71,14 @@ you'd like. Pull requests are warmly welcome. Thanks alot
 
 ### Demo
 <div style="display: flex; flex-wrap: wrap">
- <img src="https://i.imgur.com/oJqL4FG.png"  width="250">
- <img src="https://i.imgur.com/p3EwDuz.png"  width="250">
+ <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 09.08.14.png"  width="250">
+ <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 09.13.39.png"  width="250">
 </div>
 <div style="display: flex; flex-wrap: wrap">
-  <img src="https://i.imgur.com/2V2bjJz.png" width="250">
- <img src="https://i.imgur.com/Sj49rlK.png" width="250">
+  <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 09.07.22.png" width="250">
+ <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 09.19.06.png" width="250">
 </div>
 <div style="display: flex">
- <img src="https://i.imgur.com/vnbPrl4.png" width="250">
+ <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 08.53.26.png" width="250">
  <img src="https://i.imgur.com/mT5Vjmj.png" width="250">
 </div>

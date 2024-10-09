@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, StyleSheet, Pressable, SafeAreaView } from "react-native";
-import { AddSubscriptionView } from "@/components/Payment";
+import { PaymentFormView } from "@/components/Payment";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getCreditCardToken } from "@/utils/Tools";
 import { router } from "expo-router";
@@ -44,7 +44,7 @@ export default function AddCreditCardScreen() {
           <MaterialCommunityIcons name="arrow-left" size={30} color="black" />
         </Pressable>
       </View>
-      <AddSubscriptionView
+      <PaymentFormView
         error={error}
         submitted={submitted}
         onSubmit={onSubmit}
