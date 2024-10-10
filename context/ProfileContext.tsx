@@ -1,7 +1,7 @@
 import { createContext, useReducer, useContext } from "react";
 import * as SecureStore from "expo-secure-store";
 
-type StateType = typeof initialState;
+export type StateType = typeof initialState;
 type ActionType =
   | { type: "SET_PROFILE"; profile: StateType }
   | { type: "SIGN_OUT" }

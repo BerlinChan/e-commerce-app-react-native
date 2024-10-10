@@ -11,15 +11,21 @@ import CustomText from "@/components/UI/CustomText";
 import Colors from "@/utils/Colors";
 import { CartItem } from "./CartItem";
 import Messages from "@/messages/user";
-//PropTypes check
-import PropTypes from "prop-types";
 import { router } from "expo-router";
-import { useCart } from "@/context/CartContext";
+import { useCart, StateType as CartStateType } from "@/context/CartContext";
+import { StateType as ProfileStateType } from "@/context/ProfileContext";
 
-export const CartBody = ({ profile, cart, loadCarts, isRefreshing }) => {
+type Props = {
+  profile: ProfileStateType;
+  cart: CartStateType;
+  loadCarts: () => Promise<void>;
+  isRefreshing?: boolean;
+};
+
+export const CartBody = ({ profile, cart, loadCarts, isRefreshing }: Props) => {
   const { cartDispatch } = useCart();
 
-  const onRemove = (itemId) => {
+  const onRemove = (itemId: number) => {
     Alert.alert(
       "Abandon Cart",
       "Are you sure you want to remove the item from your cart?",
@@ -62,7 +68,7 @@ export const CartBody = ({ profile, cart, loadCarts, isRefreshing }) => {
             data={cart.items}
             onRefresh={loadCarts}
             refreshing={isRefreshing}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => {
               return (
                 <CartItem
@@ -85,13 +91,6 @@ export const CartBody = ({ profile, cart, loadCarts, isRefreshing }) => {
       )}
     </View>
   );
-};
-
-CartBody.propTypes = {
-  profile: PropTypes.object.isRequired,
-  cart: PropTypes.object.isRequired,
-  loadCarts: PropTypes.func.isRequired,
-  isRefreshing: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -13,10 +13,16 @@ import NumberFormat from "@/components/UI/NumberFormat";
 //Icon
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomText from "@/components/UI/CustomText";
-//PropTypes check
-import PropTypes from "prop-types";
+import { StateType as CartStateType } from "@/context/CartContext";
 
-export const CartItem = ({ item, onAdd, onDes, onRemove }) => {
+type Props = {
+  item: CartStateType["items"][number];
+  onAdd: () => void;
+  onDes: () => void;
+  onRemove: () => void;
+};
+
+export const CartItem = ({ item, onAdd, onDes, onRemove }: Props) => {
   const AddItemHandler = () => {
     onAdd();
   };
@@ -83,13 +89,6 @@ export const CartItem = ({ item, onAdd, onDes, onRemove }) => {
       </View>
     </View>
   );
-};
-
-CartItem.propTypes = {
-  item: PropTypes.object.isRequired,
-  onAdd: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  onDes: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

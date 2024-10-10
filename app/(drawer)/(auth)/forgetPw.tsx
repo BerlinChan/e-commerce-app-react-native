@@ -1,9 +1,8 @@
-import React, { useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
+  Pressable,
   ActivityIndicator,
 } from "react-native";
 import CustomText from "@/components/UI/CustomText";
@@ -13,48 +12,52 @@ import Colors from "@/utils/Colors";
 //Icon
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "@/context/AuthContext";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
 
-type FormType = {
+type FormData = {
   email: string;
 };
-export default function ForgetPwScreen(props) {
+
+export default function ForgetPwScreen() {
   const {
     control,
     handleSubmit,
-    formState: { isLoading },
+    // TODO: use isSubmitting to forms
+    formState: { isSubmitting },
     reset,
-  } = useForm<FormType>({
+  } = useForm<FormData>({
     defaultValues: {
-      email: "anonymousUser@mail.com",
+      email: "",
     },
   });
   const { auth, authDispatch } = useAuth();
-  // const dispatch = useDispatch();
 
-  const submit = async (values) => {
+  const submit = async ({ email }: FormData) => {
     try {
-      // await authDispatch(ForgetPassword(values.email));
-      props.navigation.navigate("FinishResetScreen", {
-        value: values,
-      });
+      authDispatch({ type: "SET_LOADING", loading: true });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // TODO: correct history stack
+      router.replace(`/(auth)/finishReset?email=${email}`);
     } catch (err) {
       alert(err);
+    } finally {
+      authDispatch({ type: "SET_LOADING", loading: false });
+      reset();
     }
   };
 
   // TODO: uniform the usage of back arrow icon
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           router.back();
         }}
         style={{ position: "absolute", top: 30, left: 20 }}
       >
         <Feather name="arrow-left" size={30} color={Colors.lighter_green} />
-      </TouchableOpacity>
+      </Pressable>
       <View style={styles.content}>
         <CustomText style={styles.title}> Forget Password </CustomText>
         <Controller
@@ -75,7 +78,7 @@ export default function ForgetPwScreen(props) {
               keyboardType="email-address"
               label="Email"
               icon="email"
-              input={{ onBlur, onChange, value }}
+              input={{ onBlur, onChange, value, disabled: isSubmitting }}
               meta={{
                 error: error?.message,
                 touched: isTouched,
@@ -83,7 +86,7 @@ export default function ForgetPwScreen(props) {
             />
           )}
         />
-        <TouchableOpacity
+        <Pressable
           onPress={handleSubmit(submit)}
           style={{ marginVertical: 10, alignItems: "center" }}
         >
@@ -94,7 +97,7 @@ export default function ForgetPwScreen(props) {
               <CustomText style={styles.textSign}>NEXT</CustomText>
             )}
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

@@ -1,17 +1,25 @@
 import React from "react";
-import { View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { View, KeyboardTypeOptions } from "react-native";
+import { TextInput, TextInputProps } from "react-native-paper";
 import CustomText from "@/components/UI/CustomText";
 //Colors
 import Colors from "@/utils/Colors";
 
-export default ForgetRenderField = ({
+type Props = {
+  keyboardType?: KeyboardTypeOptions;
+  icon: string;
+  label: string;
+  meta: { touched: boolean; error?: string; warning?: boolean };
+  input: TextInputProps & { onChange: TextInputProps["onChangeText"] };
+};
+
+export default function ForgetRenderField({
   keyboardType,
   icon,
   label,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
-}) => {
+}: Props) {
   return (
     <View style={{ marginTop: 30 }}>
       <TextInput
@@ -38,4 +46,4 @@ export default ForgetRenderField = ({
           )))}
     </View>
   );
-};
+}

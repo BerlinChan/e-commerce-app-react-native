@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ColorValue } from "react-native";
 //Color
 import Colors from "@/utils/Colors";
 //number format
@@ -6,7 +6,12 @@ import { NumericFormat } from "react-number-format";
 //Text
 import CustomText from "./CustomText";
 
-const Number = ({ price, color }) => {
+type Props = {
+  price?: number | string;
+  color?: ColorValue;
+};
+
+const NumberFormat = ({ price, color }: Props) => {
   return (
     <NumericFormat
       value={price}
@@ -41,9 +46,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 1,
   },
-  price: {
-    fontSize: 13,
-  },
 });
 
-export default Number;
+export default NumberFormat;

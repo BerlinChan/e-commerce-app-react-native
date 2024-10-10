@@ -3,8 +3,8 @@ import * as SecureStore from "expo-secure-store";
 
 type StateType = typeof initialState;
 type ActionType =
-  | { type: "setToken"; token: string }
-  | { type: "setLoading"; loading: boolean }
+  | { type: "SET_TOKEN"; token: string }
+  | { type: "SET_LOADING"; loading: boolean }
   | { type: "SIGN_OUT" };
 
 const initialState = {
@@ -22,14 +22,14 @@ function reducer(
   action: ActionType
 ): StateType {
   switch (action.type) {
-    case "setToken": {
+    case "SET_TOKEN": {
       SecureStore.setItemAsync("token", action.token);
       return {
         ...state,
         token: action.token,
       };
     }
-    case "setLoading": {
+    case "SET_LOADING": {
       return {
         ...state,
         loading: action.loading,

@@ -1,11 +1,11 @@
 import { createContext, useReducer, useContext } from "react";
 
-type StateType = typeof initialState;
+export type StateType = typeof initialState;
 type ActionType =
   | { type: "ADD_TO_CART"; item: any }
   | { type: "FETCH_CART"; items: any }
-  | { type: "REMOVE_FROM_CART"; itemId: string }
-  | { type: "DEC_CART_QUANTITY"; itemId: string }
+  | { type: "REMOVE_FROM_CART"; itemId: number }
+  | { type: "DEC_CART_QUANTITY"; itemId: number }
   | { type: "RESET_CART"; payload: any }
   | { type: "CART_LOADING" }
   | { type: "CART_FAILURE" };

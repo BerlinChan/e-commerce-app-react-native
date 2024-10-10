@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions, Animated } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 //Colors
 import Colors from "@/utils/Colors";
 //Components
@@ -17,8 +17,13 @@ import { Portal, Provider } from "react-native-paper";
 import { timeoutPromise } from "@/utils/Tools";
 import { API_URL } from "@/utils/Config";
 import { useProfile } from "@/context/ProfileContext";
+import { type Router } from "expo-router";
 
-export const HomeScreen = ({ router }) => {
+type Props = {
+  router: Router;
+};
+
+export const HomeScreen = ({ router }: Props) => {
   // const dispatch = useDispatch();
   //Header Animation
   const scrollY = new Animated.Value(0);
@@ -59,10 +64,7 @@ export const HomeScreen = ({ router }) => {
         <Skeleton />
       ) : (
         <View style={styles.container}>
-          <Header
-            scrollPoint={scrollY}
-            products={products}
-          />
+          <Header scrollPoint={scrollY} products={products} />
           <Portal>
             <FloatButton />
           </Portal>
@@ -122,4 +124,5 @@ const styles = StyleSheet.create({
     marginTop: 50,
     paddingBottom: 20,
   },
+  banner: {},
 });
