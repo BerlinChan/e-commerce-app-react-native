@@ -2,20 +2,25 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Colors from "@/utils/Colors";
 import { Button } from "react-native-paper";
-//PropTypes check
-import PropTypes from "prop-types";
+
+type Props = {
+  uploadButton?: boolean;
+  setUploadButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setImageUri: React.Dispatch<React.SetStateAction<string>>;
+  UploadProfile: () => Promise<void>;
+};
 
 const UploadButton = ({
   uploadButton,
   setUploadButton,
   setImageUri,
   UploadProfile,
-}) => {
+}: Props) => {
   return (
     <View style={styles.button}>
       <Button
-        icon='camera'
-        mode='contained'
+        icon="camera"
+        mode="contained"
         onPress={UploadProfile}
         disabled={uploadButton}
         style={{
@@ -28,9 +33,10 @@ const UploadButton = ({
       </Button>
       {!uploadButton ? (
         <Button
-          mode='contained'
+          mode="contained"
           onPress={() => {
-            setUploadButton(true), setImageUri("");
+            setUploadButton(true);
+            setImageUri("");
           }}
           disabled={uploadButton}
           style={{
@@ -47,13 +53,6 @@ const UploadButton = ({
       )}
     </View>
   );
-};
-
-UploadButton.propTypes = {
-  uploadButton: PropTypes.bool.isRequired,
-  setUploadButton: PropTypes.func.isRequired,
-  setImageUri: PropTypes.func.isRequired,
-  UploadProfile: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

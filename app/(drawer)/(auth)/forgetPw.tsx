@@ -75,10 +75,15 @@ export default function ForgetPwScreen() {
             fieldState: { error, isTouched },
           }) => (
             <ForgetRenderField
-              keyboardType="email-address"
-              label="Email"
               icon="email"
-              input={{ onBlur, onChange, value, disabled: isSubmitting }}
+              input={{
+                onBlur,
+                onChange,
+                value,
+                disabled: isSubmitting,
+                keyboardType: "email-address",
+                placeholder: "Email",
+              }}
               meta={{
                 error: error?.message,
                 touched: isTouched,

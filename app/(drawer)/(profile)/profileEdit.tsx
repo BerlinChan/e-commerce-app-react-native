@@ -1,46 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Pressable, SafeAreaView } from "react-native";
+import { View, StyleSheet, Pressable, SafeAreaView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // TODO: replace TouchableOpacity with Pressable
-import { TouchableOpacity } from "react-native-gesture-handler";
+// TODO: remove unused import
 import { TextInput, Button } from "react-native-paper";
 import Colors from "@/utils/Colors";
 import Loader from "@/components/Loaders/Loader";
 import { useProfile } from "@/context/ProfileContext";
 import { router } from "expo-router";
+import { useForm, Controller } from "react-hook-form";
+import InputField from "@/components/InputField";
+
+type FormData = {
+  phone: string;
+  address: string;
+};
 
 export default function EditProfileScreen() {
   const { profile, profileDispatch } = useProfile();
-  const [address, setAddress] = useState(profile.address.street);
-  const [phone, setPhone] = useState(profile.phone);
   const [disableButton, setDisableBotton] = useState(true);
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+    watch,
+  } = useForm<FormData>({
+    defaultValues: {
+      phone: profile.phone,
+      address: profile.address.street,
+    },
+  });
+  const watchFields = watch();
 
   useEffect(() => {
-    if (profile.phone !== phone || profile.address.street !== address) {
-      setDisableBotton(false);
-    }
-  }, [address, phone]);
+    setDisableBotton(
+      watchFields.phone === profile.phone &&
+        watchFields.address === profile.address.street
+    );
+  }, [watchFields]);
 
-  const updateInfoHandler = async () => {
-    if (phone.length === 10 && address.length >= 6) {
-      try {
-        // await dispatch(EditInfo(phone, address));
-        router.navigate("/(drawer)/(profile)/profile");
-      } catch (err) {
-        alert(err);
-      }
-    } else {
-      return Alert.alert("Error", "Invalid information. Please re-enter.", [
-        {
-          text: "OK",
-        },
-      ]);
+  const onSubmit = async (fields: FormData) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      profileDispatch({
+        type: "EDIT_PROFILE",
+        payload: { phone: fields.phone, street: fields.address },
+      });
+      router.back();
+      reset();
+    } catch (err) {
+      alert(err);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {profile.loading ? <Loader /> : <></>}
+      {profile.loading ? <Loader /> : null}
       <View style={styles.backIcon}>
         <Pressable onPress={() => router.back()}>
           <MaterialCommunityIcons name="arrow-left" size={30} color="black" />
@@ -57,35 +73,69 @@ export default function EditProfileScreen() {
             selectionColor={Colors.leave_green}
             style={{ marginVertical: 10 }}
           />
-          <TextInput
-            label="Phone"
-            value={phone}
-            mode="outlined"
-            theme={{ colors: { primary: Colors.leave_green } }}
-            selectionColor={Colors.leave_green}
-            onChangeText={(text) => setPhone(text)}
-            style={{ marginVertical: 10 }}
-            keyboardType="numeric"
-            returnKeyType="done"
+          <Controller
+            name="phone"
+            control={control}
+            rules={{
+              maxLength: 20,
+              required: "Phone cannot be blank",
+            }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { isTouched, error, invalid },
+            }) => (
+              <InputField
+                input={{
+                  onChange,
+                  onBlur,
+                  value,
+                  disabled: isSubmitting,
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  label: "Phone",
+                }}
+                meta={{
+                  error: error?.message,
+                  touched: isTouched || invalid,
+                }}
+              />
+            )}
           />
-          <TextInput
-            label="Address"
-            value={address}
-            mode="outlined"
-            theme={{ colors: { primary: Colors.leave_green } }}
-            selectionColor={Colors.leave_green}
-            onChangeText={(text) => setAddress(text)}
-            style={{ marginVertical: 10 }}
-            autoCapitalize="words"
+          <Controller
+            name="address"
+            control={control}
+            rules={{
+              maxLength: 50,
+              required: "Address cannot be blank",
+            }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { isTouched, error, invalid },
+            }) => (
+              <InputField
+                input={{
+                  onChange,
+                  onBlur,
+                  value,
+                  disabled: isSubmitting,
+                  label: "Address",
+                  autoCapitalize: "words",
+                }}
+                meta={{
+                  error: error?.message,
+                  touched: isTouched || invalid,
+                }}
+              />
+            )}
           />
         </View>
         <View style={styles.button}>
           <Button
             icon="update"
             mode="contained"
-            loading={profile.loading}
+            loading={profile.loading || isSubmitting}
             disabled={disableButton}
-            onPress={updateInfoHandler}
+            onPress={handleSubmit(onSubmit)}
             style={{
               height: 50,
               justifyContent: "center",

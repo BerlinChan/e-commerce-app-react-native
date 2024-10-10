@@ -36,7 +36,7 @@ export const SignInForm: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { isLoading },
+    formState: { isSubmitting },
     reset,
   } = useForm<FormType>({
     defaultValues: {
@@ -102,7 +102,7 @@ export const SignInForm: React.FC = () => {
         throw new Error(errorResData.err);
       }
       const resToken = await responseSignIn.json();
-      authDispatch({ type: "setToken", token: resToken.token });
+      authDispatch({ type: "SET_TOKEN", token: resToken.token });
 
       const responseProfile = await timeoutPromise(
         fetch(`${API_URL}/users/1`, {
@@ -119,7 +119,7 @@ export const SignInForm: React.FC = () => {
         throw new Error(errorResData.err);
       }
       const resProfile = await responseProfile.json();
-      profileDispatch({ type: "SET_PROFILE", profile: resProfile });
+      profileDispatch({ type: "SET_PROFILE", payload: resProfile });
 
       reset();
       router.navigate("/(drawer)/(tabs)");
@@ -158,10 +158,14 @@ export const SignInForm: React.FC = () => {
                   fieldState: { error, isTouched },
                 }) => (
                   <InputField
-                    keyboardType="default"
-                    label="Username"
                     icon="account"
-                    input={{ onBlur, onChange, value }}
+                    input={{
+                      onBlur,
+                      onChange,
+                      value,
+                      keyboardType: "default",
+                      placeholder: "Username",
+                    }}
                     meta={{
                       error: error?.message,
                       touched: isTouched,
@@ -186,14 +190,18 @@ export const SignInForm: React.FC = () => {
                   fieldState: { error, isTouched },
                 }) => (
                   <InputField
-                    keyboardType="default"
-                    label="Password"
                     secureTextEntry={showPass ? false : true}
                     passIcon="eye"
                     icon="lock"
                     showPass={showPass}
                     setShowPass={setShowPass}
-                    input={{ onBlur, onChange, value }}
+                    input={{
+                      onBlur,
+                      onChange,
+                      value,
+                      keyboardType: "default",
+                      placeholder: "Password",
+                    }}
                     meta={{
                       error: error?.message,
                       touched: isTouched,
@@ -223,7 +231,7 @@ export const SignInForm: React.FC = () => {
               style={{ marginVertical: 10, alignItems: "center" }}
             >
               <View style={styles.signIn}>
-                {isLoading ? (
+                {isSubmitting ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
                   <CustomText style={styles.textSign}>Log in</CustomText>

@@ -1,2 +1,2 @@
 export * from "./AuthBody";
-export * from "./Header";
+export * from "./Header.tsx";

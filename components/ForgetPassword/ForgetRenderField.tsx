@@ -6,24 +6,19 @@ import CustomText from "@/components/UI/CustomText";
 import Colors from "@/utils/Colors";
 
 type Props = {
-  keyboardType?: KeyboardTypeOptions;
   icon: string;
-  label: string;
   meta: { touched: boolean; error?: string; warning?: boolean };
   input: TextInputProps & { onChange: TextInputProps["onChangeText"] };
 };
 
 export default function ForgetRenderField({
-  keyboardType,
   icon,
-  label,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
 }: Props) {
   return (
     <View style={{ marginTop: 30 }}>
       <TextInput
-        placeholder={label}
         autoCapitalize="none"
         clearButtonMode="always"
         mode="outlined"
@@ -33,7 +28,6 @@ export default function ForgetRenderField({
           <TextInput.Icon icon={icon} size={24} color={Colors.lighter_green} />
         }
         style={{ fontSize: 14 }}
-        keyboardType={keyboardType}
         onChangeText={onChange}
         {...restInput}
       />
@@ -42,7 +36,7 @@ export default function ForgetRenderField({
           <CustomText style={{ color: Colors.red }}>{error}</CustomText>
         )) ||
           (warning && (
-            <CustomText style={{ color: Colors.red }}>{warning}</CustomText>
+            <CustomText style={{ color: Colors.yellow }}>{warning}</CustomText>
           )))}
     </View>
   );

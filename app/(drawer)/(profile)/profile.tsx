@@ -80,7 +80,6 @@ export default function ProfileScreen() {
               uploadButton={uploadButton}
               setUploadButton={setUploadButton}
               setImageUri={setImageUri}
-              loading={profile.loading}
               UploadProfile={UploadProfile}
             />
           </View>

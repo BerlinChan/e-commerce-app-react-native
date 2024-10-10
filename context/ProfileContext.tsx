@@ -2,9 +2,11 @@ import { createContext, useReducer, useContext } from "react";
 import * as SecureStore from "expo-secure-store";
 
 export type StateType = typeof initialState;
+// TODO: naming convention 'payload'
 type ActionType =
-  | { type: "SET_PROFILE"; profile: StateType }
-  | { type: "SIGN_OUT" }
+  | { type: "SET_PROFILE"; payload: StateType }
+  | { type: "EDIT_PROFILE"; payload: { phone: string; street: string } }
+  | { type: "SIGN_OUT"; payload: any }
   | { type: "ADD_TO_CART"; payload: any }
   | { type: "ADD_TO_FAVORITES"; payload: any }
   | { type: "REMOVE_FROM_FAVORITES"; payload: any };
@@ -56,14 +58,24 @@ const Context = createContext<{
 
 function reducer(
   state: StateType = initialState,
-  action: ActionType
+  { type, payload }: ActionType
 ): StateType {
-  switch (action.type) {
+  switch (type) {
     case "SET_PROFILE": {
-      SecureStore.setItemAsync("profile", JSON.stringify(action.profile));
+      SecureStore.setItemAsync("profile", JSON.stringify(payload));
       return {
         ...state,
-        ...action.profile,
+        ...payload,
+      };
+    }
+    case "EDIT_PROFILE": {
+      return {
+        ...state,
+        phone: payload.phone,
+        address: {
+          ...state.address,
+          street: payload.street,
+        },
       };
     }
     case "SIGN_OUT": {
@@ -75,15 +87,13 @@ function reducer(
     case "ADD_TO_FAVORITES": {
       return {
         ...state,
-        favorites: [...state.favorites, action.payload],
+        favorites: [...state.favorites, payload],
       };
     }
     case "REMOVE_FROM_FAVORITES": {
       return {
         ...state,
-        favorites: state.favorites.filter(
-          (fav) => fav.id !== action.payload.id
-        ),
+        favorites: state.favorites.filter((fav) => fav.id !== payload.id),
       };
     }
     default:

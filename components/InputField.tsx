@@ -1,13 +1,21 @@
 import { View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, TextInputProps } from "react-native-paper";
 //Colors
 import Colors from "@/utils/Colors";
 import CustomText from "@/components/UI/CustomText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default InputField = ({
-  label,
-  keyboardType,
+type Props = {
+  secureTextEntry?: boolean;
+  icon?: string;
+  showPass?: boolean;
+  passIcon?: string;
+  setShowPass?: React.Dispatch<React.SetStateAction<boolean>>;
+  meta: { touched?: boolean; error?: string; warning?: boolean };
+  input: TextInputProps & { onChange: TextInputProps["onChangeText"] };
+};
+
+export default function InputField({
   secureTextEntry,
   icon,
   showPass,
@@ -15,12 +23,11 @@ export default InputField = ({
   setShowPass,
   meta: { touched, error, warning },
   input: { onChange, ...restInput },
-}) => {
+}: Props) {
   return (
     <View>
       <View>
         <TextInput
-          placeholder={label}
           autoCapitalize="none"
           mode="outlined"
           clearButtonMode={passIcon ? "never" : "always"}
@@ -42,7 +49,6 @@ export default InputField = ({
             marginVertical: 5,
             // paddingHorizontal: 5,
           }}
-          keyboardType={keyboardType}
           onChangeText={onChange}
           secureTextEntry={secureTextEntry}
           {...restInput}
@@ -53,7 +59,7 @@ export default InputField = ({
             size={24}
             color={Colors.lighter_green}
             onPress={() => {
-              setShowPass((prev) => !prev);
+              setShowPass?.((prev) => !prev);
             }}
             style={{
               position: "absolute",
@@ -64,11 +70,17 @@ export default InputField = ({
           />
         )}
       </View>
-      {touched && error && (
-        <CustomText style={{ color: "red", marginHorizontal: 15 }}>
-          {error}
-        </CustomText>
-      )}
+      {touched &&
+        ((error && (
+          <CustomText style={{ color: Colors.red, marginHorizontal: 15 }}>
+            {error}
+          </CustomText>
+        )) ||
+          (warning && (
+            <CustomText style={{ color: Colors.yellow, marginHorizontal: 15 }}>
+              {warning}
+            </CustomText>
+          )))}
     </View>
   );
-};
+}

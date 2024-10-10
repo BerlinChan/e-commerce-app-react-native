@@ -6,15 +6,15 @@ import Colors from "@/utils/Colors";
 import CustomText from "@/components/UI/CustomText";
 import { useForm, Controller } from "react-hook-form";
 
-type FormType = { receiverName: string; phone: string; address: string };
+type FormData = { receiverName: string; phone: string; address: string };
 
 export const UserForm = forwardRef((props, ref) => {
   const {
     control,
     handleSubmit,
-    formState: { isLoading },
+    formState: { isSubmitting },
     reset,
-  } = useForm<FormType>({
+  } = useForm<FormData>({
     defaultValues: {
       receiverName: "Anonymous User",
       phone: "1234123123",
@@ -51,10 +51,15 @@ export const UserForm = forwardRef((props, ref) => {
             fieldState: { isTouched, error, invalid },
           }) => (
             <InputField
-              keyboardType="default"
-              label="Full Name"
-              maxLength={35}
-              input={{ onChange, onBlur, value, disabled: isLoading }}
+              input={{
+                onChange,
+                onBlur,
+                value,
+                disabled: isSubmitting,
+                keyboardType: "default",
+                maxLength: 35,
+                placeholder: "Full Name",
+              }}
               meta={{
                 error: error?.message,
                 touched: isTouched || invalid,
@@ -73,11 +78,16 @@ export const UserForm = forwardRef((props, ref) => {
             fieldState: { isTouched, error, invalid },
           }) => (
             <InputField
-              keyboardType="numeric"
-              returnKeyType="done"
-              label="Phone Number"
-              maxLength={20}
-              input={{ onChange, onBlur, value, disabled: isLoading }}
+              input={{
+                onChange,
+                onBlur,
+                value,
+                disabled: isSubmitting,
+                keyboardType: "numeric",
+                returnKeyType: "done",
+                maxLength: 20,
+                placeholder: "Phone Number",
+              }}
               meta={{
                 error: error?.message,
                 touched: isTouched || invalid,
@@ -96,10 +106,15 @@ export const UserForm = forwardRef((props, ref) => {
             fieldState: { error, isTouched, invalid },
           }) => (
             <InputField
-              keyboardType="default"
-              label="Address"
-              maxLength={50}
-              input={{ onChange, onBlur, value, disabled: isLoading }}
+              input={{
+                onChange,
+                onBlur,
+                value,
+                disabled: isSubmitting,
+                keyboardType: "default",
+                maxLength: 50,
+                placeholder: "Address",
+              }}
               meta={{
                 error: error?.message,
                 touched: isTouched || invalid,
