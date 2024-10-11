@@ -66,7 +66,7 @@ export default function Layout() {
           <ProfileProvider>
             <CartProvider>
               <OrderProvider>
-                <StatusBar />
+                <StatusBar style="dark" />
                 <LocalNotification />
                 <Stack
                   initialRouteName="intro"

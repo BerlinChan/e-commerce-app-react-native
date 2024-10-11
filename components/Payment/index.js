@@ -1,3 +1,3 @@
 export * from "./PaymentFormView";
-export * from "./Header";
+export * from "./Header.tsx";
 export * from "./PaymentBody";

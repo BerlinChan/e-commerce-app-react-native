@@ -20,12 +20,14 @@ export default function IntroScreen() {
   const rootNavigationState = useRootNavigationState();
 
   useEffect(() => {
-    (async function () {
-      const skipIntro = (await AsyncStorage.getItem("skipIntro")) === "true";
-      if (rootNavigationState?.key && skipIntro) {
-        router.navigate("/(drawer)/(tabs)/(homeTab)");
-      }
-    })();
+    if (rootNavigationState?.key) {
+      (async function () {
+        const skipIntro = (await AsyncStorage.getItem("skipIntro")) === "true";
+        if (skipIntro) {
+          router.navigate("/(drawer)/(tabs)/(homeTab)");
+        }
+      })();
+    }
   }, [rootNavigationState?.key]);
 
   const backgroundColor = scrollX.interpolate({

@@ -1,30 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-//Icon
 import Colors from "@/utils/Colors";
 import Loader from "@/components/Loaders/Loader";
-// import { useDispatch, useSelector } from 'react-redux';
-//Action
-// import { addOrder, resetCart } from '../../reducers';
-//Text
 import CustomText from "@/components/UI/CustomText";
 import { Header, PaymentBody } from "@/components/Payment";
 import { SummaryOrder } from "@/components/PreOrder";
 import { useCart } from "@/context/CartContext";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function PaymentScreen() {
   const [loading, setLoading] = useState(true);
   const { cart } = useCart();
-  const cartLoading = false;
-  const orderLoading = false;
-  //   const carts = useSelector((state) => state.cart.cartItems);
-  //   const cartLoading = useSelector((state) => state.cart.isLoading);
-  //   const orderLoading = useSelector((state) => state.order.isLoading);
-  let token = "props.route.params.token";
-  const [payByCard, setPayByCard] = useState(false);
-  const paymentMethod = payByCard ? "Credit Card" : "Cash";
-  const unmounted = useRef(false);
+  const { token, cardLast4 } = useLocalSearchParams<{
+    token: string;
+    cardLast4: string;
+  }>();
+  const [payByCard, setPayByCard] = useState(Boolean(token && cardLast4));
 
   const total = cart.items.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
@@ -32,43 +23,20 @@ export default function PaymentScreen() {
   );
 
   useEffect(() => {
-    return () => {
-      unmounted.current = true;
-    };
+    (async function () {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setLoading(false);
+    })();
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLoading(false);
-    }, 1000);
-    if (!unmounted.current) {
-      return () => clearInterval(interval);
-    }
-  });
+    setPayByCard(Boolean(token && cardLast4));
+  }, [token, cardLast4]);
 
-  useEffect(() => {
-    setPayByCard(token ? true : false);
-  }, [token]);
-
-  //   const dispatch = useDispatch();
-  //   const { name, phone, fullAddress } = props.route.params;
-
-  //action Add Order
   const addOrderAct = async () => {
     try {
-      token = payByCard ? token : {};
-      //   await dispatch(
-      //     addOrder(
-      //       token,
-      //       cart.items,
-      //       name,
-      //       total,
-      //       paymentMethod,
-      //       fullAddress,
-      //       phone
-      //     )
-      //   );
-      //   await dispatch(resetCart(cart.id));
+      // await dispatch(addOrder())
+      // await dispatch(resetCart(cart.id));
       router.navigate("/(drawer)/(homeTab)/finishOrder");
     } catch (err) {
       alert(err);
@@ -77,8 +45,8 @@ export default function PaymentScreen() {
 
   return (
     <View style={styles.container}>
-      <Header navigation={router} />
-      {loading || cartLoading || orderLoading ? (
+      <Header router={router} />
+      {loading || cart.isLoading ? (
         <Loader />
       ) : (
         <>
@@ -88,6 +56,7 @@ export default function PaymentScreen() {
               payByCard={payByCard}
               setPayByCard={setPayByCard}
               token={token}
+              cardLast4={cardLast4}
             />
             <SummaryOrder cartItems={cart.items} total={total} />
           </ScrollView>

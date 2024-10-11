@@ -10,7 +10,13 @@ import PropTypes from "prop-types";
 
 const { width } = Dimensions.get("window");
 
-export const PaymentBody = ({ navigation, payByCard, setPayByCard, token }) => {
+export const PaymentBody = ({
+  navigation,
+  payByCard,
+  setPayByCard,
+  token,
+  cardLast4,
+}) => {
   return (
     <View style={styles.container}>
       <CustomText style={styles.title}>Select Payment Method</CustomText>
@@ -57,7 +63,7 @@ export const PaymentBody = ({ navigation, payByCard, setPayByCard, token }) => {
             {payByCard && token ? (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Entypo name="dots-two-horizontal" size={24} color="black" />
-                <CustomText>token.card.last4</CustomText>
+                <CustomText>{cardLast4}</CustomText>
               </View>
             ) : (
               <></>

@@ -6,8 +6,14 @@ import PreOrderItem from "@/components/PreOrder/PreOrderItem";
 //Text
 import CustomText from "@/components/UI/CustomText";
 import Colors from "@/utils/Colors";
+import { StateType as CartContextType } from "@/context/CartContext";
 
-export const SummaryOrder = ({ cartItems, total }) => {
+type Props = {
+  cartItems: CartContextType["items"];
+  total: number;
+};
+
+export const SummaryOrder = ({ cartItems, total }: Props) => {
   return (
     <View style={styles.container}>
       <CustomText style={{ ...styles.title, marginVertical: 5 }}>
@@ -37,11 +43,6 @@ export const SummaryOrder = ({ cartItems, total }) => {
     </View>
   );
 };
-
-// SummaryOrder.propTypes = {
-//   cartItems: PropTypes.array.isRequired,
-//   total: PropTypes.number.isRequired,
-// };
 
 const styles = StyleSheet.create({
   container: {

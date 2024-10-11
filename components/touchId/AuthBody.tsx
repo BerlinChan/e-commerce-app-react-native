@@ -29,10 +29,10 @@ export const AuthBody = () => {
   };
   const getData = async () => {
     const resData = await SecureStore.getItemAsync(secretKey);
-    const data = await JSON.parse(resData);
+    const data = await JSON.parse(resData || "{}");
     if (resData === null) {
       return;
-    } else if (data.email !== user.email) {
+    } else if (data.email !== profile.email) {
       await SecureStore.deleteItemAsync(secretKey);
       return setIsEnabled(false);
     }
@@ -59,9 +59,7 @@ export const AuthBody = () => {
         <CustomText style={styles.error}>
           {userMessages["user.touchid.fail"]}!
         </CustomText>
-      ) : (
-        <></>
-      )}
+      ) : null}
       <View style={styles.circleImage}>
         <Image
           source={require("@/assets/images/faceid.png")}
@@ -84,8 +82,6 @@ export const AuthBody = () => {
     </View>
   );
 };
-
-AuthBody.propTypes = {};
 
 const styles = StyleSheet.create({
   container: {

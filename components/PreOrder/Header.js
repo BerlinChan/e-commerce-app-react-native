@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
-    height: Platform.OS === "android" ? 100 : height > 667 ? 115 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 130 : 110,
   },
   innerHeader: {
     height: "96%",

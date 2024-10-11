@@ -34,7 +34,11 @@ export default function AddCreditCardScreen() {
       setError(STRIPE_ERROR);
       return;
     } // Send a request to your server with the received credit card token
-    router.navigate("/(cartTab)/payment", { token: creditCardToken });
+    router.navigate(
+      `/(cartTab)/payment?token=creditCardToken&cardLast4=${creditCardInput.values.number.slice(
+        -4
+      )}`
+    );
   };
 
   return (

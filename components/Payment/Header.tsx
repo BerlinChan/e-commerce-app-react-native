@@ -1,10 +1,9 @@
-import React from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
   Platform,
+  Pressable,
 } from "react-native";
 import Colors from "@/utils/Colors";
 //Text
@@ -12,25 +11,26 @@ import CustomText from "@/components/UI/CustomText";
 //Steps
 import OrderSteps from "@/components/UI/OrderSteps";
 import { Ionicons } from "@expo/vector-icons";
-//PropTypes check
-import PropTypes from "prop-types";
+import { Router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
-export const Header = ({ navigation }) => {
+type Props = { router: Router };
+
+export const Header = ({ router }: Props) => {
   return (
     <View style={styles.header}>
       <View style={styles.innerHeader}>
         <View
           style={{ position: "absolute", bottom: 20, left: 15, zIndex: 10 }}
         >
-          <TouchableOpacity onPress={() => navigation.back()}>
+          <Pressable onPress={() => router.back()}>
             <Ionicons
               name="arrow-back"
               size={28}
               color={Colors.lighter_green}
             />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <View style={styles.orderStepsContainer}>
           <CustomText style={styles.title}> Payment Methods </CustomText>
@@ -46,16 +46,13 @@ export const Header = ({ navigation }) => {
 
 // TODO: remove propTypes
 // TODO: convert to tsx file
-Header.propTypes = {
-  navigation: PropTypes.object.isRequired,
-};
 
 const styles = StyleSheet.create({
   header: {
     width: width,
     backgroundColor: "#fff",
     // TODO: replace with SafeArea
-    height: Platform.OS === "android" ? 100 : height > 667 ? 115 : 100,
+    height: Platform.OS === "android" ? 100 : height > 667 ? 130 : 110,
   },
   innerHeader: {
     height: "96%",

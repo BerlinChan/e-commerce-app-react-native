@@ -1,4 +1,4 @@
-This fork is a refactoring of the original project to upgrade to the latest Expo version (currently v51). It's WIP, some features are unavailable now.
+ℹ️ This fork is a refactoring of the original project to upgrade to the latest Expo SDK version (currently v51).
 
 ## Changes Detail
 - Upgrade Expo to version 51
@@ -80,5 +80,5 @@ you'd like. Pull requests are warmly welcome. Thanks alot
 </div>
 <div style="display: flex">
  <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-09 at 08.53.26.png" width="250">
- <img src="https://i.imgur.com/mT5Vjmj.png" width="250">
+ <img src="./doc/Simulator Screenshot - iPhone 16 - 2024-10-11 at 10.05.17.png" width="250">
 </div>
